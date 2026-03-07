@@ -1,0 +1,348 @@
+[
+  {
+    "id": "pm-kisan",
+    "name": "PM-KISAN",
+    "nameLocal": {
+      "hi": "प्रधानमंत्री किसान सम्मान निधि"
+    },
+    "description": "Income support scheme providing ₹6000 per year to all farmer families",
+    "category": "agriculture",
+    "targetUserTypes": ["farmer"],
+    "eligibility": [
+      "Small and marginal farmers",
+      "Land holding up to 2 hectares",
+      "Indian citizen"
+    ],
+    "benefits": [
+      "₹6000 per year in 3 installments of ₹2000 each",
+      "Direct bank transfer",
+      "No application fee"
+    ],
+    "applicationProcess": "Visit pmkisan.gov.in and register with Aadhaar. Provide bank account details and land records.",
+    "requiredDocuments": [
+      "Aadhaar Card",
+      "Bank Account Details",
+      "Land Ownership Documents"
+    ],
+    "officialLink": "https://pmkisan.gov.in/",
+    "helplineNumber": "155261",
+    "isOngoing": true
+  },
+  {
+    "id": "soil-health-card",
+    "name": "Soil Health Card Scheme",
+    "nameLocal": {
+      "hi": "मृदा स्वास्थ्य कार्ड योजना"
+    },
+    "description": "Free soil testing and health card for farmers to improve crop productivity",
+    "category": "agriculture",
+    "targetUserTypes": ["farmer"],
+    "eligibility": [
+      "All farmers",
+      "Land ownership or cultivation rights"
+    ],
+    "benefits": [
+      "Free soil testing",
+      "Customized fertilizer recommendations",
+      "Improved crop yield"
+    ],
+    "applicationProcess": "Contact nearest agriculture office or visit soilhealth.dac.gov.in",
+    "requiredDocuments": [
+      "Land documents",
+      "Aadhaar Card"
+    ],
+    "officialLink": "https://soilhealth.dac.gov.in/",
+    "isOngoing": true
+  },
+  {
+    "id": "fasal-bima",
+    "name": "Pradhan Mantri Fasal Bima Yojana",
+    "nameLocal": {
+      "hi": "प्रधानमंत्री फसल बीमा योजना"
+    },
+    "description": "Crop insurance scheme protecting farmers against crop loss",
+    "category": "agriculture",
+    "targetUserTypes": ["farmer"],
+    "eligibility": [
+      "All farmers growing notified crops",
+      "Sharecroppers and tenant farmers eligible"
+    ],
+    "benefits": [
+      "Insurance coverage for crop loss",
+      "Low premium rates",
+      "Quick claim settlement"
+    ],
+    "applicationProcess": "Apply through bank, CSC, or pmfby.gov.in within crop season",
+    "requiredDocuments": [
+      "Aadhaar Card",
+      "Bank Account",
+      "Land Records",
+      "Sowing Certificate"
+    ],
+    "officialLink": "https://pmfby.gov.in/",
+    "isOngoing": true
+  },
+  {
+    "id": "kisan-credit-card",
+    "name": "Kisan Credit Card",
+    "nameLocal": {
+      "hi": "किसान क्रेडिट कार्ड"
+    },
+    "description": "Credit facility for farmers to meet agricultural expenses",
+    "category": "agriculture",
+    "targetUserTypes": ["farmer"],
+    "eligibility": [
+      "Farmers owning cultivable land",
+      "Tenant farmers and sharecroppers",
+      "Self Help Groups"
+    ],
+    "benefits": [
+      "Credit up to ₹3 lakh at 4% interest",
+      "Flexible repayment",
+      "Insurance coverage"
+    ],
+    "applicationProcess": "Apply at nearest bank branch with land documents",
+    "requiredDocuments": [
+      "Land ownership proof",
+      "Aadhaar Card",
+      "PAN Card",
+      "Passport size photos"
+    ],
+    "officialLink": "https://www.india.gov.in/spotlight/kisan-credit-card-kcc",
+    "isOngoing": true
+  },
+  {
+    "id": "national-scholarship",
+    "name": "National Scholarship Portal",
+    "nameLocal": {
+      "hi": "राष्ट्रीय छात्रवृत्ति पोर्टल"
+    },
+    "description": "Central platform for various scholarship schemes for students",
+    "category": "education",
+    "targetUserTypes": ["student"],
+    "eligibility": [
+      "Students from Class 1 to Post Graduation",
+      "Based on merit and means",
+      "Various categories: SC/ST/OBC/Minority/General"
+    ],
+    "benefits": [
+      "Financial assistance for education",
+      "Multiple scholarship schemes",
+      "Direct bank transfer"
+    ],
+    "applicationProcess": "Register on scholarships.gov.in, fill application, upload documents",
+    "requiredDocuments": [
+      "Aadhaar Card",
+      "Bank Account Details",
+      "Income Certificate",
+      "Caste Certificate (if applicable)",
+      "Previous year marksheet"
+    ],
+    "officialLink": "https://scholarships.gov.in/",
+    "isOngoing": true
+  },
+  {
+    "id": "pm-scholarship",
+    "name": "PM Scholarship Scheme",
+    "nameLocal": {
+      "hi": "प्रधानमंत्री छात्रवृत्ति योजना"
+    },
+    "description": "Scholarship for wards of ex-servicemen and police personnel",
+    "category": "education",
+    "targetUserTypes": ["student"],
+    "eligibility": [
+      "Children of ex-servicemen",
+      "Children of police personnel killed in action",
+      "Minimum 60% marks in 12th"
+    ],
+    "benefits": [
+      "₹2500 per month for boys",
+      "₹3000 per month for girls",
+      "For professional courses"
+    ],
+    "applicationProcess": "Apply online through KSB portal during application period",
+    "requiredDocuments": [
+      "Service certificate of parent",
+      "12th marksheet",
+      "Aadhaar Card",
+      "Bank details"
+    ],
+    "officialLink": "https://ksb.gov.in/",
+    "isOngoing": true
+  },
+  {
+    "id": "post-matric-sc-st",
+    "name": "Post Matric Scholarship for SC/ST",
+    "nameLocal": {
+      "hi": "अनुसूचित जाति/जनजाति के लिए पोस्ट मैट्रिक छात्रवृत्ति"
+    },
+    "description": "Financial assistance for SC/ST students pursuing higher education",
+    "category": "education",
+    "targetUserTypes": ["student"],
+    "eligibility": [
+      "SC/ST category students",
+      "Studying in Class 11 or above",
+      "Family income below ₹2.5 lakh per annum"
+    ],
+    "benefits": [
+      "Tuition fees reimbursement",
+      "Maintenance allowance",
+      "Book allowance"
+    ],
+    "applicationProcess": "Apply through National Scholarship Portal",
+    "requiredDocuments": [
+      "Caste Certificate",
+      "Income Certificate",
+      "Admission proof",
+      "Bank details"
+    ],
+    "officialLink": "https://scholarships.gov.in/",
+    "isOngoing": true
+  },
+  {
+    "id": "inspire-scholarship",
+    "name": "INSPIRE Scholarship",
+    "nameLocal": {
+      "hi": "इंस्पायर छात्रवृत्ति"
+    },
+    "description": "Scholarship for students pursuing science courses",
+    "category": "education",
+    "targetUserTypes": ["student"],
+    "eligibility": [
+      "Top 1% students in Class 12 board exams",
+      "Pursuing BSc/MSc/Integrated MSc",
+      "Age limit: 17-22 years"
+    ],
+    "benefits": [
+      "₹80,000 per year",
+      "For 5 years (BSc + MSc)",
+      "Mentorship opportunities"
+    ],
+    "applicationProcess": "Apply online through INSPIRE portal after Class 12 results",
+    "requiredDocuments": [
+      "Class 12 marksheet",
+      "Admission proof",
+      "Aadhaar Card",
+      "Bank details"
+    ],
+    "officialLink": "https://online-inspire.gov.in/",
+    "isOngoing": true
+  },
+  {
+    "id": "startup-india-seed",
+    "name": "Startup India Seed Fund Scheme",
+    "nameLocal": {
+      "hi": "स्टार्टअप इंडिया सीड फंड योजना"
+    },
+    "description": "Financial assistance to startups for proof of concept and prototype development",
+    "category": "business",
+    "targetUserTypes": ["startup"],
+    "eligibility": [
+      "DPIIT recognized startups",
+      "Incorporated less than 2 years ago",
+      "Working on innovative products/services"
+    ],
+    "benefits": [
+      "Up to ₹20 lakh for proof of concept",
+      "Up to ₹50 lakh for prototype development",
+      "Mentorship support"
+    ],
+    "applicationProcess": "Apply through Startup India portal with business plan",
+    "requiredDocuments": [
+      "DPIIT recognition certificate",
+      "Business plan",
+      "Pitch deck",
+      "Financial projections"
+    ],
+    "officialLink": "https://www.startupindia.gov.in/",
+    "isOngoing": true
+  },
+  {
+    "id": "mudra-loan",
+    "name": "MUDRA Loan Scheme",
+    "nameLocal": {
+      "hi": "मुद्रा ऋण योजना"
+    },
+    "description": "Collateral-free loans for micro and small businesses",
+    "category": "business",
+    "targetUserTypes": ["startup"],
+    "eligibility": [
+      "Non-corporate small business units",
+      "Manufacturing, trading, or service sector",
+      "New or existing businesses"
+    ],
+    "benefits": [
+      "Shishu: Up to ₹50,000",
+      "Kishore: ₹50,000 to ₹5 lakh",
+      "Tarun: ₹5 lakh to ₹10 lakh",
+      "No collateral required"
+    ],
+    "applicationProcess": "Apply at any bank or NBFC with business plan",
+    "requiredDocuments": [
+      "Business plan",
+      "Identity proof",
+      "Address proof",
+      "Business registration (if applicable)"
+    ],
+    "officialLink": "https://www.mudra.org.in/",
+    "isOngoing": true
+  },
+  {
+    "id": "msme-registration",
+    "name": "MSME Registration (Udyam)",
+    "nameLocal": {
+      "hi": "एमएसएमई पंजीकरण (उद्यम)"
+    },
+    "description": "Free registration for micro, small and medium enterprises",
+    "category": "business",
+    "targetUserTypes": ["startup"],
+    "eligibility": [
+      "All micro, small and medium enterprises",
+      "Manufacturing or service sector",
+      "Based on investment and turnover"
+    ],
+    "benefits": [
+      "Access to government schemes",
+      "Priority sector lending",
+      "Tax benefits",
+      "Subsidy on patents"
+    ],
+    "applicationProcess": "Register online at udyamregistration.gov.in with Aadhaar",
+    "requiredDocuments": [
+      "Aadhaar Card",
+      "PAN Card",
+      "Business details"
+    ],
+    "officialLink": "https://udyamregistration.gov.in/",
+    "isOngoing": true
+  },
+  {
+    "id": "standup-india",
+    "name": "Stand-Up India Scheme",
+    "nameLocal": {
+      "hi": "स्टैंड-अप इंडिया योजना"
+    },
+    "description": "Loans for SC/ST and women entrepreneurs",
+    "category": "business",
+    "targetUserTypes": ["startup"],
+    "eligibility": [
+      "SC/ST and/or women entrepreneurs",
+      "Age 18 years or above",
+      "Setting up greenfield enterprise"
+    ],
+    "benefits": [
+      "Loan between ₹10 lakh to ₹1 crore",
+      "For manufacturing, services or trading",
+      "Handholding support"
+    ],
+    "applicationProcess": "Apply through Stand-Up India portal or bank branch",
+    "requiredDocuments": [
+      "Project report",
+      "Identity proof",
+      "Caste certificate (if applicable)",
+      "Business plan"
+    ],
+    "officialLink": "https://www.standupmitra.in/",
+    "isOngoing": true
+  }
+]
