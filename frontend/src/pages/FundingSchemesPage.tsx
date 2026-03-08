@@ -35,7 +35,6 @@ export default function FundingSchemesPage() {
   return (
     <DashboardPage
       title="Funding Schemes"
-      titleHi="फंडिंग योजनाएं"
       description="Government funding schemes for startups and businesses. MUDRA, Startup India, MSME loans and more."
       icon="💰"
       color="bg-green-600"

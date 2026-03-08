@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, Briefcase, Filter, TrendingUp, GraduationCap, IndianRupee, Building2, Phone, BookOpen } from 'lucide-react'
+import { ArrowLeft, Briefcase, Filter, TrendingUp, GraduationCap, IndianRupee, Building2, Phone, BookOpen, Sparkles, Loader2 } from 'lucide-react'
 import toast from 'react-hot-toast'
+import LanguageSelector from '../components/LanguageSelector'
+import T from '../components/T'
+
+const API = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
 export default function CareerGuidancePage() {
   const navigate = useNavigate()
@@ -9,6 +13,28 @@ export default function CareerGuidancePage() {
   const [selectedSalaryRange, setSelectedSalaryRange] = useState('all')
   const [selectedEducation, setSelectedEducation] = useState('all')
   const [sortBy, setSortBy] = useState('salary')
+  const [aiCareer, setAiCareer] = useState('')
+  const [aiLoading, setAiLoading] = useState(false)
+  const [careerQuestion, setCareerQuestion] = useState('')
+
+  const askCareerAI = async () => {
+    if (!careerQuestion.trim()) return
+    setAiLoading(true)
+    setAiCareer('')
+    try {
+      const res = await fetch(`${API}/api/ai/career-guidance`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ interest: careerQuestion, education: 'Undergraduate', skills: '', goal: careerQuestion }),
+      })
+      const data = await res.json()
+      setAiCareer(data.response || 'Could not get guidance.')
+    } catch {
+      setAiCareer('Could not reach the server. Please try again.')
+    } finally {
+      setAiLoading(false)
+    }
+  }
 
   const careers = [
     {
@@ -362,7 +388,7 @@ export default function CareerGuidancePage() {
                 </div>
               </div>
             </div>
-            <div className="w-20"></div>
+            <LanguageSelector />
           </div>
         </div>
       </header>
@@ -649,6 +675,37 @@ export default function CareerGuidancePage() {
             <p className="text-gray-600">Try adjusting your filters / अपने फ़िल्टर समायोजित करने का प्रयास करें</p>
           </div>
         )}
+
+        {/* AI Career Advisor */}
+        <div className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg shadow-md p-6 border-l-4 border-indigo-600">
+          <div className="flex items-center gap-2 mb-4">
+            <Sparkles className="text-indigo-600" size={24} />
+            <h3 className="text-xl font-bold text-gray-900">AI Career Advisor / AI करियर सलाहकार</h3>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <input
+              type="text"
+              value={careerQuestion}
+              onChange={e => setCareerQuestion(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && askCareerAI()}
+              placeholder="e.g. I want to become a data scientist, what should I do?"
+              className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+            />
+            <button
+              onClick={askCareerAI}
+              disabled={aiLoading}
+              className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors font-semibold flex items-center gap-2 disabled:opacity-50"
+            >
+              {aiLoading ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
+              {aiLoading ? 'Thinking...' : 'Ask AI'}
+            </button>
+          </div>
+          {aiCareer && (
+            <div className="bg-white rounded-lg p-6 border border-indigo-200 whitespace-pre-wrap text-sm text-gray-800 max-h-[500px] overflow-y-auto leading-relaxed">
+              {aiCareer}
+            </div>
+          )}
+        </div>
 
         {/* Career Tips */}
         <div className="mt-8 bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-lg">

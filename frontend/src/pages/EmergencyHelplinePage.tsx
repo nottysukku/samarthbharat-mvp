@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, Phone, Clock, MapPin, AlertCircle, MessageSquare } from 'lucide-react'
+import { ArrowLeft, Phone, Clock, AlertCircle, MessageSquare } from 'lucide-react'
+import LanguageSelector from '../components/LanguageSelector'
+import T from '../components/T'
 
 export default function EmergencyHelplinePage() {
   const navigate = useNavigate()
@@ -175,7 +177,7 @@ export default function EmergencyHelplinePage() {
                 </div>
               </div>
             </div>
-            <div className="w-20"></div>
+            <LanguageSelector />
           </div>
         </div>
       </header>

@@ -4,11 +4,15 @@ import { ArrowLeft, Search } from 'lucide-react'
 import { useState } from 'react'
 import GlassCard from '../components/GlassCard'
 import FlipCard from '../components/FlipCard'
+import LanguageSelector from '../components/LanguageSelector'
+import T from '../components/T'
+import { useTranslation } from '../hooks/useTranslation'
 
 export default function SchemesPage() {
   const navigate = useNavigate()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
+  const t = useTranslation
 
   const schemes = [
     {
@@ -134,15 +138,15 @@ export default function SchemesPage() {
               className="flex items-center gap-2 text-white hover:text-white/80 transition-colors px-3 py-2 rounded-lg hover:bg-white/10"
             >
               <ArrowLeft size={20} />
-              <span className="font-medium">Back to Home</span>
+              <span className="font-medium"><T>Back to Home</T></span>
             </motion.button>
             
             <div className="text-center flex-1">
-              <h1 className="text-3xl font-bold text-white">🎯 Government Schemes</h1>
-              <p className="text-sm text-white/70 mt-1">Explore available schemes and benefits</p>
+              <h1 className="text-3xl font-bold text-white">🎯 <T>Government Schemes</T></h1>
+              <p className="text-sm text-white/70 mt-1"><T>Explore available schemes and benefits</T></p>
             </div>
             
-            <div className="w-32"></div>
+            <LanguageSelector />
           </div>
         </GlassCard>
       </motion.header>
@@ -161,7 +165,7 @@ export default function SchemesPage() {
                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/50" size={20} />
                 <input
                   type="text"
-                  placeholder="Search schemes..."
+                  placeholder={t("Search schemes...")}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full pl-12 pr-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30"
@@ -183,7 +187,7 @@ export default function SchemesPage() {
                     }`}
                   >
                     <span>{category.icon}</span>
-                    <span>{category.label}</span>
+                    <span><T>{category.label}</T></span>
                   </motion.button>
                 ))}
               </div>
@@ -219,8 +223,8 @@ export default function SchemesPage() {
             className="text-center py-12"
           >
             <GlassCard className="p-12">
-              <p className="text-2xl text-white/70">No schemes found</p>
-              <p className="text-white/50 mt-2">Try adjusting your search or filters</p>
+              <p className="text-2xl text-white/70"><T>No schemes found</T></p>
+              <p className="text-white/50 mt-2"><T>Try adjusting your search or filters</T></p>
             </GlassCard>
           </motion.div>
         )}

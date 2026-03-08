@@ -1,12 +1,15 @@
+// Load environment variables FIRST (before any other imports read process.env)
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express, { Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import dotenv from 'dotenv';
 import { createServer } from 'http';
 import { logger } from './utils/logger';
 import { errorHandler } from './middleware/errorHandler';
 import { requestLogger } from './middleware/requestLogger';
-import { apiLimiter } from './middleware/rateLimiter';
+import { apiLimiter, translateLimiter } from './middleware/rateLimiter';
 
 // Routes
 import authRoutes from './routes/auth.routes';
@@ -18,9 +21,9 @@ import mandiRoutes from './routes/mandi.routes';
 import voiceRoutes from './routes/voice.routes';
 import webhookRoutes from './routes/webhook.routes';
 import healthRoutes from './routes/health.routes';
-
-// Load environment variables
-dotenv.config();
+import translateRoutes from './routes/translate';
+import cropRoutes from './routes/crop.routes';
+import aiRoutes from './routes/ai.routes';
 
 const app: Application = express();
 const PORT = process.env.PORT || 3000;
@@ -28,7 +31,7 @@ const PORT = process.env.PORT || 3000;
 // Security middleware
 app.use(helmet());
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: true,
   credentials: true
 }));
 
@@ -39,11 +42,11 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Request logging
 app.use(requestLogger);
 
-// Rate limiting
-app.use('/api', apiLimiter);
-
 // Health check (no rate limit)
 app.use('/api/health', healthRoutes);
+
+// Rate limiting for /api routes (generous to allow translations)
+app.use('/api', apiLimiter);
 
 // API Routes
 app.use('/api/auth', authRoutes);
@@ -53,6 +56,9 @@ app.use('/api/schemes', schemeRoutes);
 app.use('/api/weather', weatherRoutes);
 app.use('/api/mandi', mandiRoutes);
 app.use('/api/voice', voiceRoutes);
+app.use('/api/crop', cropRoutes);
+app.use('/api/ai', aiRoutes);
+app.use('/api', translateRoutes);
 app.use('/webhooks', webhookRoutes);
 
 // Error handling
@@ -66,6 +72,16 @@ server.listen(PORT, () => {
   logger.info(`🚀 SamarthBharat API Server running on port ${PORT}`);
   logger.info(`📝 Environment: ${process.env.NODE_ENV}`);
   logger.info(`🌐 API URL: ${process.env.API_BASE_URL}`);
+});
+
+// Prevent crashes from unhandled promise rejections
+process.on('unhandledRejection', (reason: any) => {
+  logger.error('Unhandled Promise Rejection:', reason?.message || reason);
+});
+
+process.on('uncaughtException', (error: Error) => {
+  logger.error('Uncaught Exception:', error.message);
+  // Don't exit — keep serving
 });
 
 // Graceful shutdown

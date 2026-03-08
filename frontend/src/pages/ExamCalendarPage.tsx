@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, Calendar, Clock, Bell, Download, ExternalLink } from 'lucide-react'
+import LanguageSelector from '../components/LanguageSelector'
+import T from '../components/T'
 
 export default function ExamCalendarPage() {
   const navigate = useNavigate()
@@ -96,7 +98,7 @@ export default function ExamCalendarPage() {
                 </div>
               </div>
             </div>
-            <div className="w-20"></div>
+            <LanguageSelector />
           </div>
         </div>
       </header>

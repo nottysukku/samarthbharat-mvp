@@ -1,84 +1,52 @@
 import { Router } from 'express';
+import { saveUserProfile, getUserProfile } from '../services/dynamodb';
+import { logger } from '../utils/logger';
 
 const router = Router();
 
-// Mock user storage
-const mockUsers: Record<string, any> = {};
-
 router.get('/profile', async (req, res) => {
   try {
-    const userId = 'mock-user-id'; // TODO: Get from JWT token
-    
-    const user = mockUsers[userId] || {
+    const userId = (req.headers['x-user-id'] as string) || 'default-user';
+
+    const profile = await getUserProfile(userId);
+
+    res.json(profile || {
       id: userId,
       phoneNumber: '+919876543210',
       userType: null,
       location: null,
       language: 'en',
-      preferences: {
-        notifications: {
-          push: true,
-          sms: true,
-          whatsapp: true,
-          email: false
-        }
-      },
-      createdAt: new Date().toISOString()
-    };
-    
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({
-      error: {
-        code: 'PROFILE_FETCH_ERROR',
-        message: 'Failed to fetch profile'
-      }
+      preferences: { notifications: { push: true, sms: true, whatsapp: true, email: false } },
+      createdAt: new Date().toISOString(),
     });
+  } catch (error) {
+    logger.error('Profile fetch error:', error);
+    res.status(500).json({ error: { code: 'PROFILE_FETCH_ERROR', message: 'Failed to fetch profile' } });
   }
 });
 
 router.put('/profile', async (req, res) => {
   try {
-    const userId = 'mock-user-id'; // TODO: Get from JWT token
+    const userId = (req.headers['x-user-id'] as string) || 'default-user';
     const updates = req.body;
-    
-    mockUsers[userId] = {
-      ...mockUsers[userId],
-      ...updates,
-      updatedAt: new Date().toISOString()
-    };
-    
-    res.json({
-      success: true,
-      user: mockUsers[userId]
-    });
+
+    await saveUserProfile(userId, { ...updates, id: userId });
+
+    res.json({ success: true, user: { ...updates, id: userId, updatedAt: new Date().toISOString() } });
   } catch (error) {
-    res.status(500).json({
-      error: {
-        code: 'PROFILE_UPDATE_ERROR',
-        message: 'Failed to update profile'
-      }
-    });
+    logger.error('Profile update error:', error);
+    res.status(500).json({ error: { code: 'PROFILE_UPDATE_ERROR', message: 'Failed to update profile' } });
   }
 });
 
 router.delete('/profile', async (req, res) => {
   try {
-    const userId = 'mock-user-id'; // TODO: Get from JWT token
-    
-    delete mockUsers[userId];
-    
-    res.json({
-      success: true,
-      message: 'Profile deleted successfully'
-    });
+    const userId = (req.headers['x-user-id'] as string) || 'default-user';
+    // Soft delete - just mark as deleted
+    await saveUserProfile(userId, { id: userId, deleted: true });
+    res.json({ success: true, message: 'Profile deleted successfully' });
   } catch (error) {
-    res.status(500).json({
-      error: {
-        code: 'PROFILE_DELETE_ERROR',
-        message: 'Failed to delete profile'
-      }
-    });
+    res.status(500).json({ error: { code: 'PROFILE_DELETE_ERROR', message: 'Failed to delete profile' } });
   }
 });
 

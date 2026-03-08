@@ -1,17 +1,19 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, MapPin, Phone, Clock, Navigation, Building2, Landmark, Stethoscope } from 'lucide-react'
+import LanguageSelector from '../components/LanguageSelector'
+import T from '../components/T'
 
 export default function NearbyServicesPage() {
   const navigate = useNavigate()
   const [selectedType, setSelectedType] = useState('all')
 
   const serviceTypes = [
-    { id: 'all', name: 'All', nameHi: 'सभी', icon: MapPin },
-    { id: 'mandi', name: 'Mandis', nameHi: 'मंडी', icon: Building2 },
-    { id: 'bank', name: 'Banks', nameHi: 'बैंक', icon: Landmark },
-    { id: 'kvk', name: 'KVK', nameHi: 'केवीके', icon: Building2 },
-    { id: 'hospital', name: 'Hospitals', nameHi: 'अस्पताल', icon: Stethoscope },
+    { id: 'all', name: 'All', icon: MapPin },
+    { id: 'mandi', name: 'Mandis', icon: Building2 },
+    { id: 'bank', name: 'Banks', icon: Landmark },
+    { id: 'kvk', name: 'KVK', icon: Building2 },
+    { id: 'hospital', name: 'Hospitals', icon: Stethoscope },
   ]
 
   const services = [
@@ -19,105 +21,77 @@ export default function NearbyServicesPage() {
       id: 1,
       type: 'mandi',
       name: 'Azadpur Mandi',
-      nameHi: 'आजादपुर मंडी',
       address: 'Azadpur, Delhi',
-      addressHi: 'आजादपुर, दिल्ली',
       distance: '5.2 km',
       phone: '+91-11-27676767',
       timing: '6 AM - 8 PM',
-      timingHi: 'सुबह 6 - शाम 8',
       services: ['Wholesale Market', 'Cold Storage', 'Auction'],
-      servicesHi: ['थोक बाजार', 'कोल्ड स्टोरेज', 'नीलामी'],
       rating: 4.5
     },
     {
       id: 2,
       type: 'mandi',
       name: 'Ghazipur Mandi',
-      nameHi: 'गाजीपुर मंडी',
       address: 'Ghazipur, Delhi',
-      addressHi: 'गाजीपुर, दिल्ली',
       distance: '8.5 km',
       phone: '+91-11-22222222',
       timing: '5 AM - 9 PM',
-      timingHi: 'सुबह 5 - रात 9',
       services: ['Vegetable Market', 'Fruit Market', 'Grain Market'],
-      servicesHi: ['सब्जी बाजार', 'फल बाजार', 'अनाज बाजार'],
       rating: 4.3
     },
     {
       id: 3,
       type: 'bank',
       name: 'State Bank of India',
-      nameHi: 'भारतीय स्टेट बैंक',
       address: 'Main Road, Sector 15',
-      addressHi: 'मुख्य सड़क, सेक्टर 15',
       distance: '2.1 km',
       phone: '+91-11-33333333',
       timing: '10 AM - 4 PM',
-      timingHi: 'सुबह 10 - शाम 4',
       services: ['Kisan Credit Card', 'Crop Loan', 'Savings Account'],
-      servicesHi: ['किसान क्रेडिट कार्ड', 'फसल ऋण', 'बचत खाता'],
       rating: 4.6
     },
     {
       id: 4,
       type: 'bank',
       name: 'Punjab National Bank',
-      nameHi: 'पंजाब नेशनल बैंक',
       address: 'Market Complex, Sector 22',
-      addressHi: 'मार्केट कॉम्प्लेक्स, सेक्टर 22',
       distance: '3.8 km',
       phone: '+91-11-44444444',
       timing: '10 AM - 4 PM',
-      timingHi: 'सुबह 10 - शाम 4',
       services: ['Agricultural Loan', 'Insurance', 'Gold Loan'],
-      servicesHi: ['कृषि ऋण', 'बीमा', 'गोल्ड लोन'],
       rating: 4.4
     },
     {
       id: 5,
       type: 'kvk',
       name: 'Krishi Vigyan Kendra - Delhi',
-      nameHi: 'कृषि विज्ञान केंद्र - दिल्ली',
       address: 'IARI Campus, Pusa',
-      addressHi: 'आईएआरआई कैंपस, पूसा',
       distance: '6.5 km',
       phone: '+91-11-25842940',
       timing: '9 AM - 5 PM',
-      timingHi: 'सुबह 9 - शाम 5',
       services: ['Training Programs', 'Soil Testing', 'Expert Consultation'],
-      servicesHi: ['प्रशिक्षण कार्यक्रम', 'मिट्टी परीक्षण', 'विशेषज्ञ परामर्श'],
       rating: 4.8
     },
     {
       id: 6,
       type: 'hospital',
       name: 'District Hospital',
-      nameHi: 'जिला अस्पताल',
       address: 'Civil Lines, Delhi',
-      addressHi: 'सिविल लाइन्स, दिल्ली',
       distance: '4.2 km',
       phone: '+91-11-55555555',
       timing: '24x7',
-      timingHi: '24x7',
       services: ['Emergency', 'OPD', 'Pharmacy'],
-      servicesHi: ['आपातकालीन', 'ओपीडी', 'फार्मेसी'],
       rating: 4.2
     },
     {
       id: 7,
       type: 'hospital',
       name: 'Primary Health Center',
-      nameHi: 'प्राथमिक स्वास्थ्य केंद्र',
       address: 'Village Road, Sector 10',
-      addressHi: 'गांव रोड, सेक्टर 10',
       distance: '1.5 km',
       phone: '+91-11-66666666',
       timing: '8 AM - 8 PM',
-      timingHi: 'सुबह 8 - रात 8',
       services: ['General Medicine', 'Vaccination', 'Maternity'],
-      servicesHi: ['सामान्य चिकित्सा', 'टीकाकरण', 'प्रसूति'],
       rating: 4.0
     }
   ]
@@ -138,18 +112,17 @@ export default function NearbyServicesPage() {
               className="flex items-center gap-2 hover:bg-white/20 px-3 py-2 rounded transition-colors"
             >
               <ArrowLeft size={20} />
-              <span className="font-medium">Back</span>
+              <span className="font-medium"><T>Back</T></span>
             </button>
             <div className="text-center flex-1">
               <div className="flex items-center justify-center gap-2">
                 <MapPin size={32} />
                 <div>
-                  <h1 className="text-xl font-bold">आस-पास की सेवाएं</h1>
-                  <p className="text-sm opacity-90">Nearby Services</p>
+                  <h1 className="text-xl font-bold"><T>Nearby Services</T></h1>
                 </div>
               </div>
             </div>
-            <div className="w-20"></div>
+            <LanguageSelector />
           </div>
         </div>
       </header>
@@ -159,19 +132,19 @@ export default function NearbyServicesPage() {
         <div className="bg-gradient-to-r from-pink-600 to-rose-600 text-white rounded-lg shadow-lg p-6 mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-bold mb-2">Your Location / आपका स्थान</h2>
-              <p className="text-lg opacity-90">Sector 15, Delhi / सेक्टर 15, दिल्ली</p>
+              <h2 className="text-2xl font-bold mb-2"><T>Your Location</T></h2>
+              <p className="text-lg opacity-90"><T>Sector 15, Delhi</T></p>
             </div>
             <button className="bg-white text-pink-600 px-6 py-2 rounded-lg hover:bg-gray-100 transition-colors font-semibold flex items-center gap-2">
               <Navigation size={20} />
-              Change Location
+              <T>Change Location</T>
             </button>
           </div>
         </div>
 
         {/* Service Type Filter */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">Filter by Type / प्रकार से फ़िल्टर करें</h3>
+          <h3 className="text-lg font-bold text-gray-900 mb-4"><T>Filter by Type</T></h3>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {serviceTypes.map((type) => (
               <button
@@ -184,8 +157,7 @@ export default function NearbyServicesPage() {
                 }`}
               >
                 <type.icon className="mx-auto mb-2 text-pink-600" size={32} />
-                <p className="font-bold text-gray-900 text-sm">{type.nameHi}</p>
-                <p className="text-xs text-gray-600">{type.name}</p>
+                <p className="font-bold text-gray-900 text-sm"><T>{type.name}</T></p>
               </button>
             ))}
           </div>
@@ -194,7 +166,7 @@ export default function NearbyServicesPage() {
         {/* Services List */}
         <div>
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Nearby Services / आस-पास की सेवाएं ({filteredServices.length})
+            <T>Nearby Services</T> ({filteredServices.length})
           </h2>
           <div className="space-y-4">
             {filteredServices.map((service) => (
@@ -209,11 +181,10 @@ export default function NearbyServicesPage() {
                         {service.type === 'hospital' && <Stethoscope className="text-pink-600" size={24} />}
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-xl font-bold text-gray-900 mb-1">{service.nameHi}</h3>
-                        <p className="text-sm text-gray-600 mb-2">{service.name}</p>
+                        <h3 className="text-xl font-bold text-gray-900 mb-1"><T>{service.name}</T></h3>
                         <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
                           <MapPin size={16} />
-                          <span>{service.addressHi}</span>
+                          <span><T>{service.address}</T></span>
                         </div>
                         <div className="flex items-center gap-4 text-sm">
                           <div className="flex items-center gap-1">
@@ -222,7 +193,7 @@ export default function NearbyServicesPage() {
                           </div>
                           <div className="flex items-center gap-1">
                             <Clock size={16} className="text-gray-600" />
-                            <span className="text-gray-700">{service.timingHi}</span>
+                            <span className="text-gray-700">{service.timing}</span>
                           </div>
                         </div>
                       </div>
@@ -236,11 +207,11 @@ export default function NearbyServicesPage() {
                 </div>
 
                 <div className="mb-4">
-                  <p className="text-sm font-semibold text-gray-700 mb-2">Services / सेवाएं:</p>
+                  <p className="text-sm font-semibold text-gray-700 mb-2"><T>Services</T>:</p>
                   <div className="flex flex-wrap gap-2">
-                    {service.servicesHi.map((s, idx) => (
+                    {service.services.map((s, idx) => (
                       <span key={idx} className="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-xs">
-                        {s}
+                        <T>{s}</T>
                       </span>
                     ))}
                   </div>
@@ -249,11 +220,11 @@ export default function NearbyServicesPage() {
                 <div className="flex gap-3 pt-4 border-t border-gray-200">
                   <button className="flex-1 bg-pink-600 text-white py-2 rounded-lg hover:bg-pink-700 transition-colors font-semibold flex items-center justify-center gap-2">
                     <Phone size={18} />
-                    Call / कॉल करें
+                    <T>Call</T>
                   </button>
                   <button className="flex-1 bg-gray-200 text-gray-900 py-2 rounded-lg hover:bg-gray-300 transition-colors font-semibold flex items-center justify-center gap-2">
                     <Navigation size={18} />
-                    Get Directions / दिशा प्राप्त करें
+                    <T>Get Directions</T>
                   </button>
                 </div>
               </div>

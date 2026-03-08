@@ -1,331 +1,183 @@
-# 🇮🇳 SamarthBharat Platform - MVP
+# 🇮🇳 SamarthBharat — AI-Powered Platform for Rural India
 
-## ✅ COMPLETE & READY FOR DEMO
+> **Empowering farmers, students, and small business owners** with real-time government scheme access, AI chat assistance, weather/crop intelligence, and multilingual support — all deployed on AWS.
 
-A fully functional AI-powered multi-channel assistant for underserved Indian communities (farmers, students, startups).
-
----
-
-## 🚀 QUICK START (2 Commands)
-
-```bash
-# Terminal 1: Backend
-cd backend && npm install && npm start
-
-# Terminal 2: Frontend  
-cd frontend && npm install && npm run dev
-```
-
-**Then open:** http://localhost:5173
+**Live Demo:** [http://astech-samarthbharat-s3-bucket.s3-website.ap-south-1.amazonaws.com](http://astech-samarthbharat-s3-bucket.s3-website.ap-south-1.amazonaws.com)  
+**API Health:** [http://13.204.54.234:3000/api/health](http://13.204.54.234:3000/api/health)
 
 ---
 
-## 📁 What's Included
+## 🏗️ Architecture — 10 AWS Services
 
-### ✅ Complete Backend
-- Express.js API server
-- Mock AI responses (ready for Claude integration)
-- 12 government schemes (JSON data)
-- 15 mandi prices (JSON data)
-- Weather forecast API
-- Authentication endpoints
-- WhatsApp/IVR webhooks
-- File upload handling
-
-### ✅ Complete Frontend
-- React + TypeScript + Tailwind CSS
-- 3-section landing page (Farmer/Student/Startup)
-- Full chat interface
-- Image upload UI
-- Quick action buttons
-- Voice input buttons (UI ready)
-- Responsive design (mobile-friendly)
-- Hindi + English support
-
-### ✅ Mock Data (Fully Functional)
-- Government schemes (PM-KISAN, scholarships, MUDRA, etc.)
-- Mandi prices (Wheat, Rice, Cotton, etc.)
-- Weather forecasts
-- AI chat responses
-- All ready to replace with real APIs
+| # | AWS Service | Purpose | Status |
+|---|-------------|---------|--------|
+| 1 | **Amazon Bedrock** | AI chat (Nova Lite model) | ✅ Active |
+| 2 | **DynamoDB** | Chat history, user profiles, translation cache | ✅ 5 Tables |
+| 3 | **S3** | Frontend hosting + image uploads | ✅ Active |
+| 4 | **EC2** | Backend API server (t2.micro, Elastic IP) | ✅ Running |
+| 5 | **RDS** | PostgreSQL 15 database (db.t3.micro) | ✅ Provisioned |
+| 6 | **ElastiCache** | Redis 7.0 caching layer | ✅ Provisioned |
+| 7 | **CloudFront** | CDN for frontend distribution | ✅ Active |
+| 8 | **CloudWatch** | Metrics, logs, dashboards, alarms | ✅ Active |
+| 9 | **Route 53** | DNS (samarthbharat.in) + health checks | ✅ Configured |
+| 10 | **IAM** | Role-based access (8 policies) | ✅ Active |
 
 ---
 
-## 📚 Documentation
+## ✨ Key Features
 
-### 🎯 Start Here (In Order):
+### For Farmers 🌾
+- AI-powered crop diagnosis & soil health analysis
+- Real-time mandi prices (15+ commodities)
+- Live weather forecasts (OpenWeatherMap)
+- Government schemes: PM-KISAN, PMFBY, Kisan Credit Card
+- Multilingual support (Hindi, Tamil, Telugu, Kannada, Bengali + more)
 
-1. **INSTALL-AND-RUN.md** ⚡ - Simplest installation guide
-2. **DEMO-README.md** 🎬 - Complete demo guide with script
-3. **API-CREDENTIALS-CHECKLIST.md** 🔑 - Get real API keys
-4. **QUICK-START.md** 📅 - 4-day implementation plan
-5. **SETUP-GUIDE.md** 🛠️ - Detailed technical setup
+### For Students 📚
+- Scholarship finder with eligibility matching
+- Career guidance & study roadmaps
+- College finder tool
+- Government schemes: NSP, PM Vidyalakshmi, AICTE scholarships
 
-### 📂 Additional Docs:
-- **4-DAY-SPRINT-PLAN.md** - High-level sprint overview
-- **START-HERE.md** - Immediate action plan
-- **IMPLEMENTATION-STATUS.md** - What's done, what's pending
+### For Small Businesses 💼
+- Business registration guidance
+- Compliance & licensing help
+- Government schemes: MUDRA, Startup India, Stand-Up India
 
----
+### AI Chatbot 🤖
+- Amazon Bedrock (Nova Lite) → Gemini 2.0 Flash → OpenAI fallback chain
+- Context-aware responses based on user type
+- Chat history saved to DynamoDB
 
-## 🎯 Features
-
-### Working Now (Mock Data):
-- ✅ Landing page with 3 user types
-- ✅ Chat interface with AI responses
-- ✅ Image upload for crop diagnosis
-- ✅ Quick action buttons
-- ✅ Government schemes search
-- ✅ Mandi price lookup
-- ✅ Weather forecast
-- ✅ Voice input UI
-- ✅ Mobile responsive
-
-### Ready to Integrate (Need API Keys):
-- 🔄 Claude AI (Amazon Bedrock)
-- 🔄 Twilio OTP authentication
-- 🔄 Claude Vision (image analysis)
-- 🔄 Google Cloud STT/TTS
-- 🔄 WhatsApp bot
-- 🔄 IVR system
-- 🔄 Commodity Online scraping
-- 🔄 OpenWeatherMap API
+### Translation 🌐
+- 12 Indian languages supported
+- MyMemory API → Gemini fallback
+- Translation cache in DynamoDB
 
 ---
 
-## 🎬 Demo Script (5 Minutes)
+## 🛠️ Tech Stack
 
-### 1. Landing Page (30 sec)
-"SamarthBharat helps farmers, students, and startups access government schemes and information through AI."
-
-### 2. Farmer Demo (2 min)
-- Click Farmer section
-- Ask about mandi prices
-- Upload crop image
-- Show disease diagnosis
-- Display government schemes
-
-### 3. Student Demo (1.5 min)
-- Click Student section
-- Ask about scholarships
-- Request study roadmap
-- Show exam resources
-
-### 4. Startup Demo (1 min)
-- Click Startup section
-- Ask about funding
-- Show MUDRA, Startup India schemes
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | React 18 · TypeScript · Vite 5 · Tailwind CSS 3.4 |
+| **Backend** | Node.js 18 · Express 4.18 · TypeScript (tsx) |
+| **AI** | Amazon Bedrock Nova Lite · Google Gemini 2.0 · OpenAI |
+| **Database** | DynamoDB · PostgreSQL 15 (RDS) · Redis 7.0 (ElastiCache) |
+| **Hosting** | S3 + CloudFront (frontend) · EC2 + PM2 (backend) |
+| **APIs** | OpenWeatherMap · MyMemory Translation · Twilio |
 
 ---
 
-## 🔧 Tech Stack
-
-**Frontend:**
-- React 18 + TypeScript
-- Vite (build tool)
-- Tailwind CSS
-- React Router
-- Axios
-
-**Backend:**
-- Node.js 18+ + TypeScript
-- Express.js
-- Mock JSON data
-- Ready for: PostgreSQL, MongoDB, Redis
-
-**Ready to Integrate:**
-- AWS Bedrock (Claude AI)
-- Twilio (WhatsApp, SMS, IVR)
-- Google Cloud (STT/TTS)
-- OpenWeatherMap
-
----
-
-## 📊 Project Structure
+## 📂 Project Structure
 
 ```
 samarthbharat-mvp/
 ├── backend/
 │   ├── src/
-│   │   ├── server.ts              # Main server
-│   │   ├── routes/                # API routes
-│   │   │   ├── auth.routes.ts     # Authentication
-│   │   │   ├── chat.routes.ts     # Chat/AI
-│   │   │   ├── scheme.routes.ts   # Govt schemes
+│   │   ├── server.ts          # Express API entry point
+│   │   ├── routes/            # 12 API route modules
+│   │   │   ├── ai.routes.ts       # Bedrock AI endpoints
+│   │   │   ├── chat.routes.ts     # Chat with AI
+│   │   │   ├── health.routes.ts   # 10-service health check
+│   │   │   ├── translate.ts       # Translation API
+│   │   │   ├── weather.routes.ts  # OpenWeatherMap
+│   │   │   ├── scheme.routes.ts   # Government schemes
 │   │   │   ├── mandi.routes.ts    # Mandi prices
-│   │   │   ├── weather.routes.ts  # Weather
-│   │   │   ├── user.routes.ts     # User profile
-│   │   │   ├── voice.routes.ts    # Voice I/O
-│   │   │   └── webhook.routes.ts  # WhatsApp/IVR
-│   │   ├── middleware/            # Express middleware
-│   │   ├── config/                # Configuration
-│   │   ├── utils/                 # Utilities
-│   │   └── data/                  # Mock JSON data
-│   │       ├── mockSchemes.json   # 12 schemes
-│   │       └── mockMandiPrices.json # 15 crops
-│   ├── package.json
-│   └── .env.example
+│   │   │   └── ...
+│   │   ├── services/          # AWS service integrations
+│   │   │   ├── bedrock.ts         # Amazon Bedrock AI
+│   │   │   ├── dynamodb.ts        # DynamoDB operations
+│   │   │   ├── s3.ts              # S3 file uploads
+│   │   │   ├── rds.ts             # PostgreSQL connection
+│   │   │   ├── elasticache.ts     # Redis caching
+│   │   │   ├── cloudwatch.ts      # Metrics publishing
+│   │   │   └── weather.ts         # Weather service
+│   │   ├── middleware/        # Auth, rate limiting, logging
+│   │   └── data/              # Mock data (JSON)
+│   └── package.json
 │
 ├── frontend/
 │   ├── src/
-│   │   ├── App.tsx                # Main app
-│   │   ├── pages/
-│   │   │   ├── LandingPage.tsx    # 3-section landing
-│   │   │   └── ChatPage.tsx       # Chat interface
-│   │   ├── main.tsx
-│   │   └── index.css
-│   ├── package.json
-│   └── vite.config.ts
+│   │   ├── App.tsx            # Router with 20+ pages
+│   │   ├── pages/             # All feature pages
+│   │   │   ├── LandingPage.tsx
+│   │   │   ├── DashboardPage.tsx
+│   │   │   ├── ChatPage.tsx
+│   │   │   ├── WeatherPage.tsx
+│   │   │   ├── MandiPricesPage.tsx
+│   │   │   ├── CropDiagnosisPage.tsx
+│   │   │   ├── SoilHealthPage.tsx
+│   │   │   ├── FarmerSchemesPage.tsx
+│   │   │   ├── StudentSchemesPage.tsx
+│   │   │   ├── ScholarshipFinderPage.tsx
+│   │   │   ├── CareerGuidancePage.tsx
+│   │   │   └── ...
+│   │   ├── components/        # Reusable UI components
+│   │   ├── contexts/          # Language context provider
+│   │   └── hooks/             # Translation hook
+│   └── package.json
 │
-└── Readme_Files/                  # All documentation
-    ├── INSTALL-AND-RUN.md         # ⚡ Start here
-    ├── DEMO-README.md             # 🎬 Demo guide
-    ├── API-CREDENTIALS-CHECKLIST.md
-    ├── QUICK-START.md
-    └── ...
+└── README.md
 ```
 
 ---
 
-## 🔄 Replace Mock Data with Real APIs
+## 🚀 Local Development
 
-All mock data has `TODO` comments showing where to integrate real APIs.
-
-**Example:** `backend/src/routes/chat.routes.ts`
-```typescript
-// TODO: Replace with real Claude AI integration
-// const response = await claudeService.generateResponse(message, userType);
-
-// Mock response (REMOVE THIS)
-const mockResponse = responses[Math.floor(Math.random() * responses.length)];
-```
-
-See **DEMO-README.md** for complete integration guide.
-
----
-
-## 💰 Cost Estimate
-
-**For Demo (Mock Data):** $0
-
-**With Real APIs:**
-- AWS Bedrock: $5-10
-- Twilio: $0 (free trial)
-- Google Cloud: $0 (free tier)
-- OpenWeatherMap: $0 (free tier)
-- **Total: ~$5-10**
-
-**With Deployment:**
-- AWS EC2: $10-15/month
-- **Total: ~$20-30 for hackathon**
-
----
-
-## 🐛 Troubleshooting
-
-### Backend won't start
 ```bash
+# Clone
+git clone https://github.com/YOUR_USERNAME/samarthbharat-mvp.git
+cd samarthbharat-mvp
+
+# Backend
 cd backend
 npm install
-npm start
-```
+cp .env.example .env   # Add your API keys
+npx tsx src/server.ts   # Starts on port 3000
 
-### Frontend won't start
-```bash
+# Frontend (new terminal)
 cd frontend
 npm install
-npm run dev
+npm run dev             # Starts on port 5173
 ```
 
-### "Cannot find module"
-```bash
-rm -rf node_modules
-npm install
-```
+---
 
-### Port already in use
-- Backend (3000): Kill process on port 3000
-- Frontend (5173): Vite will use next available port
+## 🌐 Deployment (AWS)
 
-See **INSTALL-AND-RUN.md** for detailed troubleshooting.
+- **Frontend** → S3 static website + CloudFront CDN
+- **Backend** → EC2 (t2.micro) with PM2 process manager
+- **Database** → DynamoDB (on-demand), RDS PostgreSQL, ElastiCache Redis
+- **DNS** → Route 53 (samarthbharat.in)
 
 ---
 
-## ✅ Pre-Demo Checklist
+## 📡 API Endpoints
 
-- [ ] Backend running (http://localhost:3000)
-- [ ] Frontend running (http://localhost:5173)
-- [ ] Landing page loads
-- [ ] Can navigate to all 3 chat types
-- [ ] Can send messages
-- [ ] Quick actions work
-- [ ] Image upload UI works
-- [ ] Tested on mobile
-- [ ] Screenshots taken as backup
-- [ ] Demo script practiced
-
----
-
-## 🎯 Success Metrics
-
-By showing this demo, you demonstrate:
-- ✅ Multi-user type platform
-- ✅ AI-powered chat interface
-- ✅ Government schemes integration
-- ✅ Agricultural data (mandi prices)
-- ✅ Image upload capability
-- ✅ Multilingual support (UI)
-- ✅ Mobile-responsive design
-- ✅ Scalable architecture
-- ✅ Ready for real API integration
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/health` | GET | Full 10-service health check |
+| `/api/chat` | POST | AI chat (Bedrock → Gemini → OpenAI) |
+| `/api/translate` | POST | Translate text (12 languages) |
+| `/api/translate-batch` | POST | Batch translation |
+| `/api/weather/current/:city` | GET | Live weather data |
+| `/api/schemes` | GET | Government schemes list |
+| `/api/mandi/prices` | GET | Commodity market prices |
+| `/api/ai/bedrock` | POST | Direct Bedrock AI query |
+| `/api/crop/diagnose` | POST | Crop disease analysis |
 
 ---
 
-## 📞 Next Steps
+## 👥 Team ASTech
 
-### For Tomorrow's Demo:
-1. Run `npm install` in both folders
-2. Start backend and frontend
-3. Practice demo script
-4. Take screenshots as backup
-
-### After Demo:
-1. Get API keys (AWS, Twilio, Google Cloud)
-2. Replace mock data with real APIs
-3. Deploy to AWS
-4. Add WhatsApp bot
-5. Add IVR system
-
----
-
-## 🎉 You're Ready!
-
-Everything is built and working with mock data. Just:
-
-```bash
-# Terminal 1
-cd backend && npm install && npm start
-
-# Terminal 2
-cd frontend && npm install && npm run dev
-```
-
-Open **http://localhost:5173** and show your partner!
+Built for the **AI for Bharat Hackathon** — March 2026
 
 ---
 
 ## 📄 License
 
-MIT License - Built for AI for Bharat Hackathon
-
----
-
-## 🙏 Acknowledgments
-
-- AWS for Bedrock
-- Twilio for communication APIs
-- Google Cloud for voice services
-- Government of India for scheme data
+MIT License
 
 ---
 

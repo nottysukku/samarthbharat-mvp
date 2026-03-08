@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, Scale, FileText, CheckCircle, AlertTriangle, Calendar, Download } from 'lucide-react'
+import LanguageSelector from '../components/LanguageSelector'
+import T from '../components/T'
 
 export default function ComplianceGuidePage() {
   const navigate = useNavigate()
@@ -156,7 +158,7 @@ export default function ComplianceGuidePage() {
                 </div>
               </div>
             </div>
-            <div className="w-20"></div>
+            <LanguageSelector />
           </div>
         </div>
       </header>

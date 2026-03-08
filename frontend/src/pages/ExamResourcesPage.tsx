@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, BookOpen, Download, FileText, Video, CheckSquare } from 'lucide-react'
+import LanguageSelector from '../components/LanguageSelector'
+import T from '../components/T'
 
 export default function ExamResourcesPage() {
   const navigate = useNavigate()
@@ -123,7 +125,7 @@ export default function ExamResourcesPage() {
                 </div>
               </div>
             </div>
-            <div className="w-20"></div>
+            <LanguageSelector />
           </div>
         </div>
       </header>

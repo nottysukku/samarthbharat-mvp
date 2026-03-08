@@ -1,15 +1,41 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, Leaf, TrendingUp, AlertCircle, CheckCircle, Download } from 'lucide-react'
+import { ArrowLeft, Leaf, TrendingUp, AlertCircle, CheckCircle, Download, Sparkles, Loader2 } from 'lucide-react'
+import LanguageSelector from '../components/LanguageSelector'
+import T from '../components/T'
+
+const API = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
 export default function SoilHealthPage() {
   const navigate = useNavigate()
   const [selectedField, setSelectedField] = useState('field1')
+  const [aiAdvice, setAiAdvice] = useState('')
+  const [aiLoading, setAiLoading] = useState(false)
+
+  const getAIAdvice = async () => {
+    const soil = soilData[selectedField]
+    if (!soil) return
+    setAiLoading(true)
+    setAiAdvice('')
+    try {
+      const res = await fetch(`${API}/api/ai/soil-analysis`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ soilType: soil.soilType, ph: String(soil.ph), crop: 'Wheat', region: 'North India' }),
+      })
+      const data = await res.json()
+      setAiAdvice(data.response || 'Could not get advice.')
+    } catch {
+      setAiAdvice('Could not reach the server. Please try again.')
+    } finally {
+      setAiLoading(false)
+    }
+  }
 
   const fields = [
-    { id: 'field1', name: 'Field 1 - North', nameHi: 'खेत 1 - उत्तर', area: '5 acres' },
-    { id: 'field2', name: 'Field 2 - South', nameHi: 'खेत 2 - दक्षिण', area: '3 acres' },
-    { id: 'field3', name: 'Field 3 - East', nameHi: 'खेत 3 - पूर्व', area: '4 acres' },
+    { id: 'field1', name: 'Field 1 - North', area: '5 acres' },
+    { id: 'field2', name: 'Field 2 - South', area: '3 acres' },
+    { id: 'field3', name: 'Field 3 - East', area: '4 acres' },
   ]
 
   const soilData: any = {
@@ -18,49 +44,36 @@ export default function SoilHealthPage() {
       testDate: '15 Jan 2024',
       nextTest: '15 Jan 2025',
       soilType: 'Loamy',
-      soilTypeHi: 'दोमट',
       ph: 6.8,
       nitrogen: 'Medium',
-      nitrogenHi: 'मध्यम',
       phosphorus: 'High',
-      phosphorusHi: 'उच्च',
       potassium: 'Low',
-      potassiumHi: 'कम',
       organicCarbon: 0.65,
       ec: 0.42,
       recommendations: [
         {
           nutrient: 'Nitrogen',
-          nutrientHi: 'नाइट्रोजन',
           status: 'medium',
           recommendation: 'Apply 120 kg/ha Urea',
-          recommendationHi: '120 किग्रा/हेक्टेयर यूरिया डालें',
-          timing: 'Split application: 50% at sowing, 25% at 30 days, 25% at 60 days',
-          timingHi: 'विभाजित अनुप्रयोग: बुवाई पर 50%, 30 दिन पर 25%, 60 दिन पर 25%'
+          timing: 'Split application: 50% at sowing, 25% at 30 days, 25% at 60 days'
         },
         {
           nutrient: 'Phosphorus',
-          nutrientHi: 'फास्फोरस',
           status: 'high',
           recommendation: 'No additional P required',
-          recommendationHi: 'अतिरिक्त फास्फोरस की आवश्यकता नहीं',
-          timing: 'Maintain current levels',
-          timingHi: 'वर्तमान स्तर बनाए रखें'
+          timing: 'Maintain current levels'
         },
         {
           nutrient: 'Potassium',
-          nutrientHi: 'पोटैशियम',
           status: 'low',
           recommendation: 'Apply 80 kg/ha Muriate of Potash',
-          recommendationHi: '80 किग्रा/हेक्टेयर म्यूरेट ऑफ पोटाश डालें',
-          timing: 'Full dose at sowing',
-          timingHi: 'बुवाई के समय पूरी खुराक'
+          timing: 'Full dose at sowing'
         }
       ],
       crops: [
-        { name: 'Wheat', nameHi: 'गेहूं', suitability: 'Highly Suitable', suitabilityHi: 'अत्यधिक उपयुक्त', score: 95 },
-        { name: 'Rice', nameHi: 'चावल', suitability: 'Suitable', suitabilityHi: 'उपयुक्त', score: 80 },
-        { name: 'Sugarcane', nameHi: 'गन्ना', suitability: 'Moderately Suitable', suitabilityHi: 'मध्यम उपयुक्त', score: 65 },
+        { name: 'Wheat', suitability: 'Highly Suitable', score: 95 },
+        { name: 'Rice', suitability: 'Suitable', score: 80 },
+        { name: 'Sugarcane', suitability: 'Moderately Suitable', score: 65 },
       ]
     }
   }
@@ -79,18 +92,17 @@ export default function SoilHealthPage() {
               className="flex items-center gap-2 hover:bg-white/20 px-3 py-2 rounded transition-colors"
             >
               <ArrowLeft size={20} />
-              <span className="font-medium">Back</span>
+              <span className="font-medium"><T>Back</T></span>
             </button>
             <div className="text-center flex-1">
               <div className="flex items-center justify-center gap-2">
                 <Leaf size={32} />
                 <div>
-                  <h1 className="text-xl font-bold">मृदा स्वास्थ्य कार्ड</h1>
-                  <p className="text-sm opacity-90">Soil Health Card</p>
+                  <h1 className="text-xl font-bold"><T>Soil Health Card</T></h1>
                 </div>
               </div>
             </div>
-            <div className="w-20"></div>
+            <LanguageSelector />
           </div>
         </div>
       </header>
@@ -98,7 +110,7 @@ export default function SoilHealthPage() {
       <main className="max-w-7xl mx-auto px-4 py-8">
         {/* Field Selection */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Select Field / खेत चुनें</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-4"><T>Select Field</T></h2>
           <div className="grid grid-cols-3 gap-4">
             {fields.map((field) => (
               <button
@@ -110,8 +122,7 @@ export default function SoilHealthPage() {
                     : 'border-gray-200 hover:border-amber-300'
                 }`}
               >
-                <p className="font-bold text-gray-900">{field.nameHi}</p>
-                <p className="text-sm text-gray-600">{field.name}</p>
+                <p className="font-bold text-gray-900"><T>{field.name}</T></p>
                 <p className="text-xs text-gray-500 mt-1">{field.area}</p>
               </button>
             ))}
@@ -122,63 +133,60 @@ export default function SoilHealthPage() {
         <div className="bg-gradient-to-r from-amber-700 to-orange-600 text-white rounded-lg shadow-lg p-6 mb-8">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-2xl font-bold mb-2">Soil Health Card</h2>
-              <p className="text-sm opacity-90">Card No: {currentData.cardNumber}</p>
+              <h2 className="text-2xl font-bold mb-2"><T>Soil Health Card</T></h2>
+              <p className="text-sm opacity-90"><T>Card No</T>: {currentData.cardNumber}</p>
             </div>
             <button className="bg-white text-amber-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-2">
               <Download size={20} />
-              Download PDF
+              <T>Download PDF</T>
             </button>
           </div>
           <div className="grid grid-cols-3 gap-4 pt-4 border-t border-white/30">
             <div>
-              <p className="text-sm opacity-75">Test Date</p>
+              <p className="text-sm opacity-75"><T>Test Date</T></p>
               <p className="text-lg font-semibold">{currentData.testDate}</p>
             </div>
             <div>
-              <p className="text-sm opacity-75">Next Test Due</p>
+              <p className="text-sm opacity-75"><T>Next Test Due</T></p>
               <p className="text-lg font-semibold">{currentData.nextTest}</p>
             </div>
             <div>
-              <p className="text-sm opacity-75">Soil Type</p>
-              <p className="text-lg font-semibold">{currentData.soilTypeHi} / {currentData.soilType}</p>
+              <p className="text-sm opacity-75"><T>Soil Type</T></p>
+              <p className="text-lg font-semibold"><T>{currentData.soilType}</T></p>
             </div>
           </div>
         </div>
 
         {/* Soil Parameters */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h3 className="text-xl font-bold text-gray-900 mb-6">Soil Parameters / मृदा मापदंड</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-6"><T>Soil Parameters</T></h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-blue-50 rounded-lg p-4 border-l-4 border-blue-600">
-              <p className="text-sm text-gray-600 mb-1">pH Level</p>
+              <p className="text-sm text-gray-600 mb-1"><T>pH Level</T></p>
               <p className="text-3xl font-bold text-gray-900">{currentData.ph}</p>
-              <p className="text-sm text-green-600 mt-2">✓ Optimal Range (6.5-7.5)</p>
+              <p className="text-sm text-green-600 mt-2">✓ <T>Optimal Range</T> (6.5-7.5)</p>
             </div>
             <div className="bg-yellow-50 rounded-lg p-4 border-l-4 border-yellow-600">
-              <p className="text-sm text-gray-600 mb-1">Nitrogen / नाइट्रोजन</p>
-              <p className="text-3xl font-bold text-gray-900">{currentData.nitrogenHi}</p>
-              <p className="text-sm text-gray-600 mt-2">{currentData.nitrogen}</p>
+              <p className="text-sm text-gray-600 mb-1"><T>Nitrogen</T></p>
+              <p className="text-3xl font-bold text-gray-900"><T>{currentData.nitrogen}</T></p>
             </div>
             <div className="bg-green-50 rounded-lg p-4 border-l-4 border-green-600">
-              <p className="text-sm text-gray-600 mb-1">Phosphorus / फास्फोरस</p>
-              <p className="text-3xl font-bold text-gray-900">{currentData.phosphorusHi}</p>
-              <p className="text-sm text-gray-600 mt-2">{currentData.phosphorus}</p>
+              <p className="text-sm text-gray-600 mb-1"><T>Phosphorus</T></p>
+              <p className="text-3xl font-bold text-gray-900"><T>{currentData.phosphorus}</T></p>
             </div>
             <div className="bg-red-50 rounded-lg p-4 border-l-4 border-red-600">
-              <p className="text-sm text-gray-600 mb-1">Potassium / पोटैशियम</p>
-              <p className="text-3xl font-bold text-gray-900">{currentData.potassiumHi}</p>
-              <p className="text-sm text-gray-600 mt-2">{currentData.potassium}</p>
+              <p className="text-sm text-gray-600 mb-1"><T>Potassium</T></p>
+              <p className="text-3xl font-bold text-gray-900"><T>{currentData.potassium}</T></p>
             </div>
             <div className="bg-purple-50 rounded-lg p-4 border-l-4 border-purple-600">
-              <p className="text-sm text-gray-600 mb-1">Organic Carbon</p>
+              <p className="text-sm text-gray-600 mb-1"><T>Organic Carbon</T></p>
               <p className="text-3xl font-bold text-gray-900">{currentData.organicCarbon}%</p>
-              <p className="text-sm text-gray-600 mt-2">Good Level</p>
+              <p className="text-sm text-gray-600 mt-2"><T>Good Level</T></p>
             </div>
             <div className="bg-indigo-50 rounded-lg p-4 border-l-4 border-indigo-600">
               <p className="text-sm text-gray-600 mb-1">EC (dS/m)</p>
               <p className="text-3xl font-bold text-gray-900">{currentData.ec}</p>
-              <p className="text-sm text-green-600 mt-2">✓ Normal Salinity</p>
+              <p className="text-sm text-green-600 mt-2">✓ <T>Normal Salinity</T></p>
             </div>
           </div>
         </div>
@@ -187,7 +195,7 @@ export default function SoilHealthPage() {
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
           <div className="flex items-center gap-2 mb-6">
             <TrendingUp className="text-green-600" size={24} />
-            <h3 className="text-xl font-bold text-gray-900">Fertilizer Recommendations / उर्वरक सिफारिशें</h3>
+            <h3 className="text-xl font-bold text-gray-900"><T>Fertilizer Recommendations</T></h3>
           </div>
           <div className="space-y-4">
             {currentData.recommendations.map((rec: any, idx: number) => (
@@ -202,19 +210,17 @@ export default function SoilHealthPage() {
                 }`}
               >
                 <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-bold text-gray-900 text-lg">{rec.nutrientHi} / {rec.nutrient}</h4>
+                  <h4 className="font-bold text-gray-900 text-lg"><T>{rec.nutrient}</T></h4>
                   {rec.status === 'low' && <AlertCircle className="text-red-600" size={24} />}
                   {rec.status === 'high' && <CheckCircle className="text-green-600" size={24} />}
                 </div>
                 <div className="space-y-2">
                   <div>
-                    <p className="font-semibold text-gray-900">{rec.recommendationHi}</p>
-                    <p className="text-sm text-gray-600">{rec.recommendation}</p>
+                    <p className="font-semibold text-gray-900"><T>{rec.recommendation}</T></p>
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-gray-700">Application Timing:</p>
-                    <p className="text-sm text-gray-600">{rec.timingHi}</p>
-                    <p className="text-xs text-gray-500">{rec.timing}</p>
+                    <p className="text-sm font-semibold text-gray-700"><T>Application Timing</T>:</p>
+                    <p className="text-sm text-gray-600"><T>{rec.timing}</T></p>
                   </div>
                 </div>
               </div>
@@ -224,18 +230,18 @@ export default function SoilHealthPage() {
 
         {/* Crop Suitability */}
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-xl font-bold text-gray-900 mb-6">Crop Suitability / फसल उपयुक्तता</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-6"><T>Crop Suitability</T></h3>
           <div className="space-y-4">
             {currentData.crops.map((crop: any, idx: number) => (
               <div key={idx} className="bg-gray-50 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
                   <div>
-                    <h4 className="font-bold text-gray-900">{crop.nameHi} / {crop.name}</h4>
-                    <p className="text-sm text-gray-600">{crop.suitabilityHi} / {crop.suitability}</p>
+                    <h4 className="font-bold text-gray-900"><T>{crop.name}</T></h4>
+                    <p className="text-sm text-gray-600"><T>{crop.suitability}</T></p>
                   </div>
                   <div className="text-right">
                     <p className="text-2xl font-bold text-green-600">{crop.score}%</p>
-                    <p className="text-xs text-gray-600">Suitability</p>
+                    <p className="text-xs text-gray-600"><T>Suitability</T></p>
                   </div>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
@@ -249,6 +255,28 @@ export default function SoilHealthPage() {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* AI Soil Expert */}
+        <div className="mt-8 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg shadow-md p-6 border-l-4 border-green-600">
+          <div className="flex items-center gap-2 mb-4">
+            <Sparkles className="text-green-600" size={24} />
+            <h3 className="text-xl font-bold text-gray-900"><T>AI Soil Expert</T> / AI मिट्टी विशेषज्ञ</h3>
+          </div>
+          <p className="text-gray-600 mb-4 text-sm"><T>Get AI-powered fertilizer and crop recommendations based on your soil data</T></p>
+          <button
+            onClick={getAIAdvice}
+            disabled={aiLoading}
+            className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold flex items-center gap-2 disabled:opacity-50 mb-4"
+          >
+            {aiLoading ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
+            {aiLoading ? 'Analyzing...' : 'Get AI Recommendations'}
+          </button>
+          {aiAdvice && (
+            <div className="bg-white rounded-lg p-6 border border-green-200 whitespace-pre-wrap text-sm text-gray-800 max-h-[500px] overflow-y-auto leading-relaxed">
+              {aiAdvice}
+            </div>
+          )}
         </div>
       </main>
     </div>

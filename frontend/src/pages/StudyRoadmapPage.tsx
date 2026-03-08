@@ -1,76 +1,96 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, Target, CheckCircle, Clock, BookOpen, TrendingUp } from 'lucide-react'
+import { ArrowLeft, Target, CheckCircle, Clock, BookOpen, TrendingUp, Sparkles, Loader2 } from 'lucide-react'
+import LanguageSelector from '../components/LanguageSelector'
+import T from '../components/T'
+
+const API = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
 export default function StudyRoadmapPage() {
   const navigate = useNavigate()
   const [selectedExam, setSelectedExam] = useState('jee')
+  const [aiRoadmap, setAiRoadmap] = useState('')
+  const [aiLoading, setAiLoading] = useState(false)
 
   const exams = [
-    { id: 'jee', name: 'JEE Main', nameHi: 'जेईई मेन' },
-    { id: 'neet', name: 'NEET', nameHi: 'नीट' },
-    { id: 'upsc', name: 'UPSC CSE', nameHi: 'यूपीएससी सीएसई' },
-    { id: 'ssc', name: 'SSC CGL', nameHi: 'एसएससी सीजीएल' },
+    { id: 'jee', name: 'JEE Main' },
+    { id: 'neet', name: 'NEET' },
+    { id: 'upsc', name: 'UPSC CSE' },
+    { id: 'ssc', name: 'SSC CGL' },
   ]
 
   const roadmaps: any = {
     jee: {
       duration: '12 months',
-      durationHi: '12 महीने',
       phases: [
         {
           phase: 'Foundation (Months 1-3)',
-          phaseHi: 'आधार (महीने 1-3)',
           topics: [
-            { subject: 'Physics', subjectHi: 'भौतिकी', chapters: ['Mechanics', 'Thermodynamics', 'Waves'], progress: 100 },
-            { subject: 'Chemistry', subjectHi: 'रसायन विज्ञान', chapters: ['Physical Chemistry', 'Organic Basics'], progress: 100 },
-            { subject: 'Mathematics', subjectHi: 'गणित', chapters: ['Algebra', 'Trigonometry', 'Coordinate Geometry'], progress: 100 },
+            { subject: 'Physics', chapters: ['Mechanics', 'Thermodynamics', 'Waves'], progress: 100 },
+            { subject: 'Chemistry', chapters: ['Physical Chemistry', 'Organic Basics'], progress: 100 },
+            { subject: 'Mathematics', chapters: ['Algebra', 'Trigonometry', 'Coordinate Geometry'], progress: 100 },
           ],
           status: 'completed'
         },
         {
           phase: 'Intermediate (Months 4-7)',
-          phaseHi: 'मध्यवर्ती (महीने 4-7)',
           topics: [
-            { subject: 'Physics', subjectHi: 'भौतिकी', chapters: ['Electromagnetism', 'Optics', 'Modern Physics'], progress: 60 },
-            { subject: 'Chemistry', subjectHi: 'रसायन विज्ञान', chapters: ['Inorganic Chemistry', 'Organic Reactions'], progress: 55 },
-            { subject: 'Mathematics', subjectHi: 'गणित', chapters: ['Calculus', 'Vectors', '3D Geometry'], progress: 70 },
+            { subject: 'Physics', chapters: ['Electromagnetism', 'Optics', 'Modern Physics'], progress: 60 },
+            { subject: 'Chemistry', chapters: ['Inorganic Chemistry', 'Organic Reactions'], progress: 55 },
+            { subject: 'Mathematics', chapters: ['Calculus', 'Vectors', '3D Geometry'], progress: 70 },
           ],
           status: 'in-progress'
         },
         {
           phase: 'Advanced (Months 8-10)',
-          phaseHi: 'उन्नत (महीने 8-10)',
           topics: [
-            { subject: 'Physics', subjectHi: 'भौतिकी', chapters: ['Advanced Problems', 'Previous Year Questions'], progress: 0 },
-            { subject: 'Chemistry', subjectHi: 'रसायन विज्ञान', chapters: ['Complex Reactions', 'Application Problems'], progress: 0 },
-            { subject: 'Mathematics', subjectHi: 'गणित', chapters: ['Advanced Calculus', 'Complex Numbers'], progress: 0 },
+            { subject: 'Physics', chapters: ['Advanced Problems', 'Previous Year Questions'], progress: 0 },
+            { subject: 'Chemistry', chapters: ['Complex Reactions', 'Application Problems'], progress: 0 },
+            { subject: 'Mathematics', chapters: ['Advanced Calculus', 'Complex Numbers'], progress: 0 },
           ],
           status: 'pending'
         },
         {
           phase: 'Revision & Mock Tests (Months 11-12)',
-          phaseHi: 'पुनरीक्षण और मॉक टेस्ट (महीने 11-12)',
           topics: [
-            { subject: 'Full Syllabus Revision', subjectHi: 'पूर्ण पाठ्यक्रम पुनरीक्षण', chapters: ['All Topics'], progress: 0 },
-            { subject: 'Mock Tests', subjectHi: 'मॉक टेस्ट', chapters: ['20+ Full Length Tests'], progress: 0 },
+            { subject: 'Full Syllabus Revision', chapters: ['All Topics'], progress: 0 },
+            { subject: 'Mock Tests', chapters: ['20+ Full Length Tests'], progress: 0 },
           ],
           status: 'pending'
         }
       ],
       weeklySchedule: [
-        { day: 'Monday', dayHi: 'सोमवार', morning: 'Physics', afternoon: 'Chemistry', evening: 'Mathematics' },
-        { day: 'Tuesday', dayHi: 'मंगलवार', morning: 'Mathematics', afternoon: 'Physics', evening: 'Chemistry' },
-        { day: 'Wednesday', dayHi: 'बुधवार', morning: 'Chemistry', afternoon: 'Mathematics', evening: 'Physics' },
-        { day: 'Thursday', dayHi: 'गुरुवार', morning: 'Physics', afternoon: 'Chemistry', evening: 'Practice Tests' },
-        { day: 'Friday', dayHi: 'शुक्रवार', morning: 'Mathematics', afternoon: 'Physics', evening: 'Chemistry' },
-        { day: 'Saturday', dayHi: 'शनिवार', morning: 'Full Mock Test', afternoon: 'Analysis', evening: 'Revision' },
-        { day: 'Sunday', dayHi: 'रविवार', morning: 'Weak Topics', afternoon: 'Doubt Clearing', evening: 'Rest' },
+        { day: 'Monday', morning: 'Physics', afternoon: 'Chemistry', evening: 'Mathematics' },
+        { day: 'Tuesday', morning: 'Mathematics', afternoon: 'Physics', evening: 'Chemistry' },
+        { day: 'Wednesday', morning: 'Chemistry', afternoon: 'Mathematics', evening: 'Physics' },
+        { day: 'Thursday', morning: 'Physics', afternoon: 'Chemistry', evening: 'Practice Tests' },
+        { day: 'Friday', morning: 'Mathematics', afternoon: 'Physics', evening: 'Chemistry' },
+        { day: 'Saturday', morning: 'Full Mock Test', afternoon: 'Analysis', evening: 'Revision' },
+        { day: 'Sunday', morning: 'Weak Topics', afternoon: 'Doubt Clearing', evening: 'Rest' },
       ]
     }
   }
 
   const currentRoadmap = roadmaps[selectedExam]
+
+  const generateAIRoadmap = async () => {
+    setAiLoading(true)
+    setAiRoadmap('')
+    try {
+      const examName = exams.find(e => e.id === selectedExam)?.name || selectedExam
+      const res = await fetch(`${API}/api/ai/study-roadmap`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ exam: examName, months: 6, hoursPerDay: 6, currentLevel: 'Beginner' }),
+      })
+      const data = await res.json()
+      setAiRoadmap(data.response || 'Could not generate roadmap.')
+    } catch {
+      setAiRoadmap('Could not reach the server. Please try again.')
+    } finally {
+      setAiLoading(false)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -84,18 +104,17 @@ export default function StudyRoadmapPage() {
               className="flex items-center gap-2 hover:bg-white/20 px-3 py-2 rounded transition-colors"
             >
               <ArrowLeft size={20} />
-              <span className="font-medium">Back</span>
+              <span className="font-medium"><T>Back</T></span>
             </button>
             <div className="text-center flex-1">
               <div className="flex items-center justify-center gap-2">
                 <Target size={32} />
                 <div>
-                  <h1 className="text-xl font-bold">अध्ययन रोडमैप</h1>
-                  <p className="text-sm opacity-90">Study Roadmap</p>
+                  <h1 className="text-xl font-bold"><T>Study Roadmap</T></h1>
                 </div>
               </div>
             </div>
-            <div className="w-20"></div>
+            <LanguageSelector />
           </div>
         </div>
       </header>
@@ -103,7 +122,7 @@ export default function StudyRoadmapPage() {
       <main className="max-w-7xl mx-auto px-4 py-8">
         {/* Exam Selection */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Select Your Exam / अपनी परीक्षा चुनें</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-4"><T>Select Your Exam</T></h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {exams.map((exam) => (
               <button
@@ -115,8 +134,7 @@ export default function StudyRoadmapPage() {
                     : 'border-gray-200 hover:border-purple-300'
                 }`}
               >
-                <p className="font-bold text-gray-900">{exam.nameHi}</p>
-                <p className="text-sm text-gray-600">{exam.name}</p>
+                <p className="font-bold text-gray-900"><T>{exam.name}</T></p>
               </button>
             ))}
           </div>
@@ -127,13 +145,13 @@ export default function StudyRoadmapPage() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-2xl font-bold mb-2">
-                {exams.find(e => e.id === selectedExam)?.nameHi} Roadmap
+                <T>{exams.find(e => e.id === selectedExam)?.name} Roadmap</T>
               </h2>
-              <p className="opacity-90">Duration: {currentRoadmap.duration} / अवधि: {currentRoadmap.durationHi}</p>
+              <p className="opacity-90"><T>Duration</T>: {currentRoadmap.duration}</p>
             </div>
             <div className="text-right">
               <div className="text-4xl font-bold">45%</div>
-              <p className="text-sm opacity-90">Overall Progress</p>
+              <p className="text-sm opacity-90"><T>Overall Progress</T></p>
             </div>
           </div>
         </div>
@@ -153,25 +171,24 @@ export default function StudyRoadmapPage() {
             >
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">{phase.phaseHi}</h3>
-                  <p className="text-sm text-gray-600">{phase.phase}</p>
+                  <h3 className="text-xl font-bold text-gray-900 mb-1"><T>{phase.phase}</T></h3>
                 </div>
                 <div className="flex items-center gap-2">
                   {phase.status === 'completed' && (
                     <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
                       <CheckCircle size={16} />
-                      Completed
+                      <T>Completed</T>
                     </span>
                   )}
                   {phase.status === 'in-progress' && (
                     <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
                       <Clock size={16} />
-                      In Progress
+                      <T>In Progress</T>
                     </span>
                   )}
                   {phase.status === 'pending' && (
                     <span className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-semibold">
-                      Pending
+                      <T>Pending</T>
                     </span>
                   )}
                 </div>
@@ -182,7 +199,7 @@ export default function StudyRoadmapPage() {
                   <div key={topicIdx} className="bg-gray-50 rounded-lg p-4">
                     <div className="flex items-center justify-between mb-2">
                       <h4 className="font-semibold text-gray-900">
-                        {topic.subjectHi} / {topic.subject}
+                        <T>{topic.subject}</T>
                       </h4>
                       <span className="text-sm font-semibold text-purple-600">{topic.progress}%</span>
                     </div>
@@ -198,7 +215,7 @@ export default function StudyRoadmapPage() {
                           key={chIdx}
                           className="bg-white px-3 py-1 rounded-full text-xs text-gray-700 border border-gray-200"
                         >
-                          {chapter}
+                          <T>{chapter}</T>
                         </span>
                       ))}
                     </div>
@@ -213,38 +230,37 @@ export default function StudyRoadmapPage() {
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="flex items-center gap-2 mb-6">
             <BookOpen className="text-purple-600" size={24} />
-            <h3 className="text-xl font-bold text-gray-900">Weekly Schedule / साप्ताहिक कार्यक्रम</h3>
+            <h3 className="text-xl font-bold text-gray-900"><T>Weekly Schedule</T></h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b-2 border-gray-200">
-                  <th className="text-left py-3 px-4 font-semibold text-gray-900">Day / दिन</th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-900">Morning (6-10 AM)</th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-900">Afternoon (2-6 PM)</th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-900">Evening (7-10 PM)</th>
+                  <th className="text-left py-3 px-4 font-semibold text-gray-900"><T>Day</T></th>
+                  <th className="text-left py-3 px-4 font-semibold text-gray-900"><T>Morning (6-10 AM)</T></th>
+                  <th className="text-left py-3 px-4 font-semibold text-gray-900"><T>Afternoon (2-6 PM)</T></th>
+                  <th className="text-left py-3 px-4 font-semibold text-gray-900"><T>Evening (7-10 PM)</T></th>
                 </tr>
               </thead>
               <tbody>
                 {currentRoadmap.weeklySchedule.map((day: any, idx: number) => (
                   <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
                     <td className="py-3 px-4">
-                      <div className="font-semibold text-gray-900">{day.dayHi}</div>
-                      <div className="text-sm text-gray-600">{day.day}</div>
+                      <div className="font-semibold text-gray-900"><T>{day.day}</T></div>
                     </td>
                     <td className="py-3 px-4">
                       <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
-                        {day.morning}
+                        <T>{day.morning}</T>
                       </span>
                     </td>
                     <td className="py-3 px-4">
                       <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
-                        {day.afternoon}
+                        <T>{day.afternoon}</T>
                       </span>
                     </td>
                     <td className="py-3 px-4">
                       <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">
-                        {day.evening}
+                        <T>{day.evening}</T>
                       </span>
                     </td>
                   </tr>
@@ -254,28 +270,50 @@ export default function StudyRoadmapPage() {
           </div>
         </div>
 
+        {/* AI Roadmap Generator */}
+        <div className="mt-8 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg shadow-md p-6 border-l-4 border-purple-600">
+          <div className="flex items-center gap-2 mb-4">
+            <Sparkles className="text-purple-600" size={24} />
+            <h3 className="text-xl font-bold text-gray-900"><T>AI-Powered Roadmap Generator</T></h3>
+          </div>
+          <p className="text-gray-600 mb-4 text-sm"><T>Get a personalized study plan generated by AI for your selected exam</T></p>
+          <button
+            onClick={generateAIRoadmap}
+            disabled={aiLoading}
+            className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors font-semibold flex items-center gap-2 disabled:opacity-50 mb-4"
+          >
+            {aiLoading ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
+            {aiLoading ? 'Generating Roadmap...' : `Generate AI Roadmap for ${exams.find(e => e.id === selectedExam)?.name}`}
+          </button>
+          {aiRoadmap && (
+            <div className="bg-white rounded-lg p-6 border border-purple-200 whitespace-pre-wrap text-sm text-gray-800 max-h-[500px] overflow-y-auto leading-relaxed">
+              {aiRoadmap}
+            </div>
+          )}
+        </div>
+
         {/* Study Tips */}
         <div className="mt-8 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg shadow-md p-6 border-l-4 border-indigo-600">
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp className="text-indigo-600" size={24} />
-            <h3 className="text-xl font-bold text-gray-900">Study Tips / अध्ययन युक्तियाँ</h3>
+            <h3 className="text-xl font-bold text-gray-900"><T>Study Tips</T></h3>
           </div>
           <ul className="grid md:grid-cols-2 gap-3">
             <li className="flex items-start gap-2">
               <span className="text-indigo-600">✓</span>
-              <span className="text-gray-700">Study in focused 2-hour blocks with 15-min breaks</span>
+              <span className="text-gray-700"><T>Study in focused 2-hour blocks with 15-min breaks</T></span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-indigo-600">✓</span>
-              <span className="text-gray-700">Revise previous day's topics every morning</span>
+              <span className="text-gray-700"><T>Revise previous day's topics every morning</T></span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-indigo-600">✓</span>
-              <span className="text-gray-700">Solve at least 50 problems daily</span>
+              <span className="text-gray-700"><T>Solve at least 50 problems daily</T></span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-indigo-600">✓</span>
-              <span className="text-gray-700">Take one full mock test every week</span>
+              <span className="text-gray-700"><T>Take one full mock test every week</T></span>
             </li>
           </ul>
         </div>

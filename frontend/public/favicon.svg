@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Background circle with saffron gradient -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FF9933"/>
+      <stop offset="50%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#138808"/>
+    </linearGradient>
+  </defs>
+  <!-- Main circle -->
+  <circle cx="32" cy="32" r="30" fill="url(#bg)" stroke="#1a365d" stroke-width="2"/>
+  <!-- Ashoka Chakra (simplified) -->
+  <circle cx="32" cy="32" r="10" fill="none" stroke="#000080" stroke-width="1.5"/>
+  <circle cx="32" cy="32" r="2" fill="#000080"/>
+  <!-- 12 spokes -->
+  <g stroke="#000080" stroke-width="1">
+    <line x1="32" y1="22" x2="32" y2="42"/>
+    <line x1="22" y1="32" x2="42" y2="32"/>
+    <line x1="24.9" y1="24.9" x2="39.1" y2="39.1"/>
+    <line x1="39.1" y1="24.9" x2="24.9" y2="39.1"/>
+    <line x1="27.2" y1="23.4" x2="36.8" y2="40.6"/>
+    <line x1="36.8" y1="23.4" x2="27.2" y2="40.6"/>
+    <line x1="23.4" y1="27.2" x2="40.6" y2="36.8"/>
+    <line x1="23.4" y1="36.8" x2="40.6" y2="27.2"/>
+    <line x1="25.5" y1="22.8" x2="38.5" y2="41.2"/>
+    <line x1="38.5" y1="22.8" x2="25.5" y2="41.2"/>
+    <line x1="22.8" y1="25.5" x2="41.2" y2="38.5"/>
+    <line x1="22.8" y1="38.5" x2="41.2" y2="25.5"/>
+  </g>
+  <!-- S and B letters -->
+  <text x="15" y="56" font-family="Arial,sans-serif" font-weight="bold" font-size="10" fill="#1a365d">S</text>
+  <text x="44" y="56" font-family="Arial,sans-serif" font-weight="bold" font-size="10" fill="#1a365d">B</text>
+</svg>

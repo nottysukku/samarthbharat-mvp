@@ -4,6 +4,8 @@ import { ArrowLeft, Users, MessageSquare, TrendingUp, Award, Clock, CheckCircle,
 import GlassCard from '../components/GlassCard'
 import AnimatedCounter from '../components/AnimatedCounter'
 import ProgressBar from '../components/ProgressBar'
+import LanguageSelector from '../components/LanguageSelector'
+import T from '../components/T'
 
 export default function StatsPage() {
   const navigate = useNavigate()
@@ -45,15 +47,15 @@ export default function StatsPage() {
               className="flex items-center gap-2 text-white hover:text-white/80 transition-colors px-3 py-2 rounded-lg hover:bg-white/10"
             >
               <ArrowLeft size={20} />
-              <span className="font-medium">Back to Home</span>
+              <span className="font-medium"><T>Back to Home</T></span>
             </motion.button>
             
             <div className="text-center flex-1">
-              <h1 className="text-3xl font-bold text-white">📊 Statistics Dashboard</h1>
-              <p className="text-sm text-white/70 mt-1">Real-time platform analytics</p>
+              <h1 className="text-3xl font-bold text-white">📊 <T>Statistics Dashboard</T></h1>
+              <p className="text-sm text-white/70 mt-1"><T>Real-time platform analytics</T></p>
             </div>
             
-            <div className="w-32"></div>
+            <LanguageSelector />
           </div>
         </GlassCard>
       </motion.header>
@@ -79,7 +81,7 @@ export default function StatsPage() {
                 <h3 className="text-4xl font-bold text-white mb-2">
                   <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                 </h3>
-                <p className="text-white/70">{stat.label}</p>
+                <p className="text-white/70"><T>{stat.label}</T></p>
               </GlassCard>
             </motion.div>
           ))}
@@ -95,7 +97,7 @@ export default function StatsPage() {
           <GlassCard className="p-8">
             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
               <Users className="text-blue-400" />
-              Category Breakdown
+              <T>Category Breakdown</T>
             </h2>
             <div className="space-y-6">
               {categoryStats.map((category, idx) => (
@@ -133,7 +135,7 @@ export default function StatsPage() {
           <GlassCard className="p-8">
             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
               <Clock className="text-purple-400" />
-              Recent Activity
+              <T>Recent Activity</T>
             </h2>
             <div className="space-y-4">
               {recentActivity.map((activity, idx) => (

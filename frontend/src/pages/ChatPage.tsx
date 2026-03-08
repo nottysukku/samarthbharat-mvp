@@ -1,8 +1,12 @@
 import { useState, useRef, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, Send, Image as ImageIcon, Mic, Shield } from 'lucide-react'
+import { ArrowLeft, Send, Image as ImageIcon, Mic } from 'lucide-react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import LanguageSelector from '../components/LanguageSelector'
+import T from '../components/T'
+
+const API = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
 interface Message {
   id: string
@@ -32,22 +36,19 @@ export default function ChatPage() {
 
   const userTypeConfig = {
     farmer: {
-      title: 'किसान सहायक',
-      subtitle: 'Farmer Assistant',
+      title: 'Farmer Assistant',
       color: 'green',
       bgColor: 'bg-green-700',
       icon: '🌾'
     },
     student: {
-      title: 'छात्र सहायक',
-      subtitle: 'Student Assistant',
+      title: 'Student Assistant',
       color: 'blue',
       bgColor: 'bg-blue-700',
       icon: '📚'
     },
     startup: {
-      title: 'व्यवसाय सहायक',
-      subtitle: 'Business Assistant',
+      title: 'Business Assistant',
       color: 'orange',
       bgColor: 'bg-orange-600',
       icon: '💼'
@@ -60,12 +61,11 @@ export default function ChatPage() {
     const greeting = {
       id: Date.now().toString(),
       role: 'assistant' as const,
-      content: `नमस्ते! Welcome to SamarthBharat ${config.title}. How can I help you today?`,
+      content: `Welcome to SamarthBharat ${config.title}. How can I help you today?\nसमर्थभारत ${config.title} में आपका स्वागत है। मैं आज आपकी कैसे मदद कर सकता हूँ?`,
       timestamp: new Date()
     }
     setMessages([greeting])
     loadQuickActions()
-    toast.success('Chat started!')
   }, [userType])
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export default function ChatPage() {
 
   const loadQuickActions = async () => {
     try {
-      const response = await axios.post('/api/chat/message', {
+      const response = await axios.post(`${API}/api/chat/message`, {
         message: 'init',
         userType,
         conversationId: null
@@ -106,7 +106,7 @@ export default function ChatPage() {
     setIsLoading(true)
 
     try {
-      const response = await axios.post('/api/chat/message', {
+      const response = await axios.post(`${API}/api/chat/message`, {
         message: input,
         userType,
         conversationId: null,
@@ -169,7 +169,7 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="flex flex-col h-screen bg-gray-50 page-enter">
       {/* Indian Flag Stripe */}
       <div className="gov-header"></div>
 
@@ -178,24 +178,21 @@ export default function ChatPage() {
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <button
-              onClick={() => navigate('/')}
+              onClick={() => navigate(userType ? `/dashboard/${userType}` : '/')}
               className="flex items-center gap-2 text-white hover:bg-white/20 px-3 py-2 rounded transition-colors"
             >
               <ArrowLeft size={20} />
-              <span className="font-medium">Back</span>
+              <span className="font-medium"><T>Back</T></span>
             </button>
             <div className="text-center flex-1">
               <div className="flex items-center justify-center gap-2">
                 <span className="text-3xl">{config.icon}</span>
                 <div>
-                  <h1 className="text-xl font-bold">{config.title}</h1>
-                  <p className="text-sm opacity-90">{config.subtitle}</p>
+                  <h1 className="text-xl font-bold"><T>{config.title}</T></h1>
                 </div>
               </div>
             </div>
-            <div className="w-20 flex justify-end">
-              <Shield size={24} />
-            </div>
+            <LanguageSelector />
           </div>
         </div>
       </header>
@@ -300,7 +297,7 @@ export default function ChatPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Type your message..."
+              placeholder="Type your message... / अपना संदेश टाइप करें..."
               className="flex-1 px-4 py-3 bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 resize-none"
               rows={1}
               style={{ minHeight: '48px', maxHeight: '120px' }}
@@ -320,7 +317,7 @@ export default function ChatPage() {
               className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 border border-gray-300"
             >
               <Mic size={18} />
-              <span>Voice Input</span>
+              <span><T>Voice Input</T></span>
             </button>
           </div>
         </div>

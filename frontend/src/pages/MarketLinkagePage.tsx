@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, Users, TrendingUp, MapPin, Phone, Star } from 'lucide-react'
+import LanguageSelector from '../components/LanguageSelector'
+import T from '../components/T'
 
 export default function MarketLinkagePage() {
   const navigate = useNavigate()
@@ -10,50 +12,35 @@ export default function MarketLinkagePage() {
     {
       id: 1,
       name: 'Reliance Fresh',
-      nameHi: 'रिलायंस फ्रेश',
       type: 'Retail Chain',
-      typeHi: 'खुदरा श्रृंखला',
       crops: ['Vegetables', 'Fruits', 'Grains'],
-      cropsHi: ['सब्जियां', 'फल', 'अनाज'],
       location: 'Delhi NCR',
-      locationHi: 'दिल्ली एनसीआर',
       rating: 4.5,
       contact: '+91-9876543210',
       minOrder: '500 kg',
-      paymentTerms: '15 days',
-      paymentTermsHi: '15 दिन'
+      paymentTerms: '15 days'
     },
     {
       id: 2,
       name: 'BigBasket',
-      nameHi: 'बिगबास्केट',
       type: 'Online Platform',
-      typeHi: 'ऑनलाइन प्लेटफॉर्म',
       crops: ['Organic Vegetables', 'Fruits'],
-      cropsHi: ['जैविक सब्जियां', 'फल'],
       location: 'Pan India',
-      locationHi: 'पैन इंडिया',
       rating: 4.7,
       contact: '+91-9876543211',
       minOrder: '1000 kg',
-      paymentTerms: '7 days',
-      paymentTermsHi: '7 दिन'
+      paymentTerms: '7 days'
     },
     {
       id: 3,
       name: 'Mother Dairy',
-      nameHi: 'मदर डेयरी',
       type: 'Cooperative',
-      typeHi: 'सहकारी',
       crops: ['Milk', 'Vegetables', 'Fruits'],
-      cropsHi: ['दूध', 'सब्जियां', 'फल'],
       location: 'Delhi, Haryana, UP',
-      locationHi: 'दिल्ली, हरियाणा, यूपी',
       rating: 4.8,
       contact: '+91-9876543212',
       minOrder: '200 kg',
-      paymentTerms: '10 days',
-      paymentTermsHi: '10 दिन'
+      paymentTerms: '10 days'
     }
   ]
 
@@ -61,23 +48,17 @@ export default function MarketLinkagePage() {
     {
       id: 1,
       name: 'Delhi Farmers Producer Organization',
-      nameHi: 'दिल्ली किसान उत्पादक संगठन',
       members: 500,
       crops: ['Wheat', 'Rice', 'Vegetables'],
-      cropsHi: ['गेहूं', 'चावल', 'सब्जियां'],
       benefits: ['Bulk selling', 'Better prices', 'Storage facilities'],
-      benefitsHi: ['थोक बिक्री', 'बेहतर कीमतें', 'भंडारण सुविधाएं'],
       contact: '+91-9876543213'
     },
     {
       id: 2,
       name: 'Haryana Organic FPO',
-      nameHi: 'हरियाणा जैविक एफपीओ',
       members: 300,
       crops: ['Organic Vegetables', 'Organic Grains'],
-      cropsHi: ['जैविक सब्जियां', 'जैविक अनाज'],
       benefits: ['Organic certification', 'Premium prices', 'Export opportunities'],
-      benefitsHi: ['जैविक प्रमाणन', 'प्रीमियम कीमतें', 'निर्यात अवसर'],
       contact: '+91-9876543214'
     }
   ]
@@ -87,25 +68,19 @@ export default function MarketLinkagePage() {
       id: 1,
       buyer: 'Reliance Fresh',
       crop: 'Tomato',
-      cropHi: 'टमाटर',
       quantity: '1000 kg/month',
       price: '₹25/kg',
       duration: '6 months',
-      durationHi: '6 महीने',
-      status: 'Active',
-      statusHi: 'सक्रिय'
+      status: 'Active'
     },
     {
       id: 2,
       buyer: 'BigBasket',
       crop: 'Organic Wheat',
-      cropHi: 'जैविक गेहूं',
       quantity: '500 kg/month',
       price: '₹35/kg',
       duration: '12 months',
-      durationHi: '12 महीने',
-      status: 'Pending Approval',
-      statusHi: 'अनुमोदन लंबित'
+      status: 'Pending Approval'
     }
   ]
 
@@ -121,18 +96,17 @@ export default function MarketLinkagePage() {
               className="flex items-center gap-2 hover:bg-white/20 px-3 py-2 rounded transition-colors"
             >
               <ArrowLeft size={20} />
-              <span className="font-medium">Back</span>
+              <span className="font-medium"><T>Back</T></span>
             </button>
             <div className="text-center flex-1">
               <div className="flex items-center justify-center gap-2">
                 <Users size={32} />
                 <div>
-                  <h1 className="text-xl font-bold">बाजार संपर्क</h1>
-                  <p className="text-sm opacity-90">Market Linkage</p>
+                  <h1 className="text-xl font-bold"><T>Market Linkage</T></h1>
                 </div>
               </div>
             </div>
-            <div className="w-20"></div>
+            <LanguageSelector />
           </div>
         </div>
       </header>
@@ -150,7 +124,7 @@ export default function MarketLinkagePage() {
               }`}
             >
               <Users className="mx-auto mb-2 text-indigo-600" size={32} />
-              <p className="font-bold text-gray-900">Buyers / खरीदार</p>
+              <p className="font-bold text-gray-900"><T>Buyers</T></p>
             </button>
             <button
               onClick={() => setSelectedCategory('fpo')}
@@ -161,7 +135,7 @@ export default function MarketLinkagePage() {
               }`}
             >
               <TrendingUp className="mx-auto mb-2 text-indigo-600" size={32} />
-              <p className="font-bold text-gray-900">FPOs / एफपीओ</p>
+              <p className="font-bold text-gray-900"><T>FPOs</T></p>
             </button>
             <button
               onClick={() => setSelectedCategory('contracts')}
@@ -172,7 +146,7 @@ export default function MarketLinkagePage() {
               }`}
             >
               <Star className="mx-auto mb-2 text-indigo-600" size={32} />
-              <p className="font-bold text-gray-900">My Contracts / मेरे अनुबंध</p>
+              <p className="font-bold text-gray-900"><T>My Contracts</T></p>
             </button>
           </div>
         </div>
@@ -180,16 +154,15 @@ export default function MarketLinkagePage() {
         {/* Buyers List */}
         {selectedCategory === 'buyers' && (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-900">Available Buyers / उपलब्ध खरीदार</h2>
+            <h2 className="text-2xl font-bold text-gray-900"><T>Available Buyers</T></h2>
             {buyers.map((buyer) => (
               <div key={buyer.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-1">{buyer.nameHi}</h3>
-                    <p className="text-sm text-gray-600">{buyer.name}</p>
+                    <h3 className="text-xl font-bold text-gray-900 mb-1"><T>{buyer.name}</T></h3>
                     <div className="flex items-center gap-2 mt-2">
                       <span className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs font-semibold">
-                        {buyer.typeHi}
+                        <T>{buyer.type}</T>
                       </span>
                       <div className="flex items-center gap-1">
                         <Star className="text-yellow-500 fill-yellow-500" size={16} />
@@ -198,41 +171,41 @@ export default function MarketLinkagePage() {
                     </div>
                   </div>
                   <button className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
-                    Connect / संपर्क करें
+                    <T>Connect</T>
                   </button>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Crops Interested / रुचि वाली फसलें</p>
+                    <p className="text-sm text-gray-600 mb-1"><T>Crops Interested</T></p>
                     <div className="flex flex-wrap gap-2">
-                      {buyer.crops.map((_, idx) => (
+                      {buyer.crops.map((crop, idx) => (
                         <span key={idx} className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">
-                          {buyer.cropsHi[idx]}
+                          <T>{crop}</T>
                         </span>
                       ))}
                     </div>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Location / स्थान</p>
+                    <p className="text-sm text-gray-600 mb-1"><T>Location</T></p>
                     <div className="flex items-center gap-2">
                       <MapPin size={16} className="text-gray-600" />
-                      <span className="text-sm text-gray-900">{buyer.locationHi}</span>
+                      <span className="text-sm text-gray-900"><T>{buyer.location}</T></span>
                     </div>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-4 pt-4 border-t border-gray-200">
                   <div>
-                    <p className="text-xs text-gray-600">Min Order</p>
+                    <p className="text-xs text-gray-600"><T>Min Order</T></p>
                     <p className="font-semibold text-gray-900">{buyer.minOrder}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-600">Payment Terms</p>
-                    <p className="font-semibold text-gray-900">{buyer.paymentTermsHi}</p>
+                    <p className="text-xs text-gray-600"><T>Payment Terms</T></p>
+                    <p className="font-semibold text-gray-900">{buyer.paymentTerms}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-600">Contact</p>
+                    <p className="text-xs text-gray-600"><T>Contact</T></p>
                     <div className="flex items-center gap-1">
                       <Phone size={14} className="text-indigo-600" />
                       <p className="font-semibold text-gray-900 text-sm">{buyer.contact}</p>
@@ -247,38 +220,37 @@ export default function MarketLinkagePage() {
         {/* FPO List */}
         {selectedCategory === 'fpo' && (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-900">Farmer Producer Organizations / किसान उत्पादक संगठन</h2>
+            <h2 className="text-2xl font-bold text-gray-900"><T>Farmer Producer Organizations</T></h2>
             {fpos.map((fpo) => (
               <div key={fpo.id} className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-1">{fpo.nameHi}</h3>
-                    <p className="text-sm text-gray-600">{fpo.name}</p>
-                    <p className="text-sm text-gray-600 mt-2">{fpo.members} Members / सदस्य</p>
+                    <h3 className="text-xl font-bold text-gray-900 mb-1"><T>{fpo.name}</T></h3>
+                    <p className="text-sm text-gray-600 mt-2">{fpo.members} <T>Members</T></p>
                   </div>
                   <button className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">
-                    Join FPO / एफपीओ में शामिल हों
+                    <T>Join FPO</T>
                   </button>
                 </div>
 
                 <div className="mb-4">
-                  <p className="text-sm font-semibold text-gray-700 mb-2">Crops / फसलें</p>
+                  <p className="text-sm font-semibold text-gray-700 mb-2"><T>Crops</T></p>
                   <div className="flex flex-wrap gap-2">
-                    {fpo.crops.map((_, idx) => (
+                    {fpo.crops.map((crop, idx) => (
                       <span key={idx} className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
-                        {fpo.cropsHi[idx]}
+                        <T>{crop}</T>
                       </span>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <p className="text-sm font-semibold text-gray-700 mb-2">Benefits / लाभ</p>
+                  <p className="text-sm font-semibold text-gray-700 mb-2"><T>Benefits</T></p>
                   <ul className="space-y-1">
                     {fpo.benefits.map((benefit, idx) => (
                       <li key={idx} className="flex items-start gap-2">
                         <span className="text-green-600">✓</span>
-                        <span className="text-sm text-gray-700">{fpo.benefitsHi[idx]} / {benefit}</span>
+                        <span className="text-sm text-gray-700"><T>{benefit}</T></span>
                       </li>
                     ))}
                   </ul>
@@ -299,9 +271,9 @@ export default function MarketLinkagePage() {
         {selectedCategory === 'contracts' && (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-gray-900">My Contracts / मेरे अनुबंध</h2>
+              <h2 className="text-2xl font-bold text-gray-900"><T>My Contracts</T></h2>
               <button className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
-                New Contract / नया अनुबंध
+                <T>New Contract</T>
               </button>
             </div>
             {contracts.map((contract) => (
@@ -309,9 +281,9 @@ export default function MarketLinkagePage() {
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 mb-1">
-                      {contract.cropHi} / {contract.crop}
+                      <T>{contract.crop}</T>
                     </h3>
-                    <p className="text-sm text-gray-600">Buyer: {contract.buyer}</p>
+                    <p className="text-sm text-gray-600"><T>Buyer</T>: {contract.buyer}</p>
                   </div>
                   <span
                     className={`px-3 py-1 rounded-full text-sm font-semibold ${
@@ -320,26 +292,26 @@ export default function MarketLinkagePage() {
                         : 'bg-yellow-100 text-yellow-800'
                     }`}
                   >
-                    {contract.statusHi}
+                    <T>{contract.status}</T>
                   </span>
                 </div>
 
                 <div className="grid grid-cols-4 gap-4">
                   <div>
-                    <p className="text-xs text-gray-600">Quantity</p>
+                    <p className="text-xs text-gray-600"><T>Quantity</T></p>
                     <p className="font-semibold text-gray-900">{contract.quantity}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-600">Price</p>
+                    <p className="text-xs text-gray-600"><T>Price</T></p>
                     <p className="font-semibold text-gray-900">{contract.price}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-600">Duration</p>
-                    <p className="font-semibold text-gray-900">{contract.durationHi}</p>
+                    <p className="text-xs text-gray-600"><T>Duration</T></p>
+                    <p className="font-semibold text-gray-900">{contract.duration}</p>
                   </div>
                   <div>
                     <button className="text-indigo-600 hover:text-indigo-700 font-semibold text-sm">
-                      View Details →
+                      <T>View Details</T> →
                     </button>
                   </div>
                 </div>
